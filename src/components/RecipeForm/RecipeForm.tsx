@@ -1,4 +1,4 @@
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import {
   RecipeFormDataOutput,
   RecipeFormDataInput,
@@ -13,6 +13,11 @@ import { makeStyles } from './styles';
 import CustomButton from '../CustomButton/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { getErrorMessage } from '../../lib/getErrorMessage';
+import {
+  KeyboardAwareScrollView,
+  KeyboardStickyView,
+} from 'react-native-keyboard-controller';
+import { Category } from '../../../types/category';
 
 type RecipeFormProps = {
   initialValues?: Partial<RecipeFormDataInput>;
@@ -20,6 +25,7 @@ type RecipeFormProps = {
   isPending?: boolean;
   submitLabel: string;
   error?: Error | null;
+  categories: Category[];
 };
 
 export default function RecipeForm({
@@ -56,111 +62,121 @@ export default function RecipeForm({
   });
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text variant="titleLarge">{submitLabel} Receita</Text>
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <CustomTextInput
-            label="Nome"
-            placeholder="Digite o nome da receita"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            error={!!errors.name}
-            errorMessage={errors.name?.message}
-          />
-        )}
-        name="name"
-      />
-      {/* TODO: Criar um input de select para categorias */}
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <CustomTextInput
-            label="Categoria"
-            placeholder="Digite a categoria"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            error={!!errors.categoryId}
-            errorMessage={errors.categoryId?.message}
-          />
-        )}
-        name="categoryId"
-      />
+    <View style={styles.root}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.container}
+        bottomOffset={90}
+      >
+        <Text variant="titleLarge">{submitLabel} Receita</Text>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomTextInput
+              label="Nome"
+              placeholder="Digite o nome da receita"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              error={!!errors.name}
+              errorMessage={errors.name?.message}
+            />
+          )}
+          name="name"
+        />
+        {/* TODO: Criar um input de select para categorias */}
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomTextInput
+              label="Categoria"
+              placeholder="Digite a categoria"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              error={!!errors.categoryId}
+              errorMessage={errors.categoryId?.message}
+            />
+          )}
+          name="categoryId"
+        />
 
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <CustomTextInput
-            label="Tempo de preparo (minutos)"
-            placeholder="Digite o tempo de preparo em minutos"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            error={!!errors.preparationTimeMinutes}
-            errorMessage={errors.preparationTimeMinutes?.message}
-            inputMode="numeric"
-          />
-        )}
-        name="preparationTimeMinutes"
-      />
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <CustomTextInput
-            label="Porções"
-            placeholder="Digite a quantidade de porções"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            error={!!errors.servings}
-            errorMessage={errors.servings?.message}
-            inputMode="numeric"
-          />
-        )}
-        name="servings"
-      />
-      {/* TODO: Implementar TextAreaCustom */}
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <CustomTextInput
-            label="Ingredientes"
-            placeholder="Digite os ingredientes"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            error={!!errors.ingredients}
-            errorMessage={errors.ingredients?.message}
-          />
-        )}
-        name="ingredients"
-      />
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomTextInput
+              label="Tempo de preparo (minutos)"
+              placeholder="Digite o tempo de preparo em minutos"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              error={!!errors.preparationTimeMinutes}
+              errorMessage={errors.preparationTimeMinutes?.message}
+              inputMode="numeric"
+            />
+          )}
+          name="preparationTimeMinutes"
+        />
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomTextInput
+              label="Porções"
+              placeholder="Digite a quantidade de porções"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              error={!!errors.servings}
+              errorMessage={errors.servings?.message}
+              inputMode="numeric"
+            />
+          )}
+          name="servings"
+        />
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomTextInput
+              label="Ingredientes"
+              placeholder="Digite os ingredientes"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              error={!!errors.ingredients}
+              errorMessage={errors.ingredients?.message}
+              multiline
+              style={styles.textAreaInput}
+            />
+          )}
+          name="ingredients"
+        />
 
-      {/* TODO: Implementar TextAreaCustom */}
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <CustomTextInput
-            label="Modo de preparo"
-            placeholder="Digite o modo de preparo"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            error={!!errors.directions}
-            errorMessage={errors.directions?.message}
-          />
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomTextInput
+              label="Modo de preparo"
+              placeholder="Digite o modo de preparo"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              error={!!errors.directions}
+              errorMessage={errors.directions?.message}
+              multiline
+              style={styles.textAreaInput}
+            />
+          )}
+          name="directions"
+        />
+        {error && (
+          <Text style={{ color: theme.colors.error }}>
+            {getErrorMessage(error)}
+          </Text>
         )}
-        name="directions"
-      />
-      {error && (
-        <Text style={{ color: theme.colors.error }}>
-          {getErrorMessage(error)}
-        </Text>
-      )}
-      <View style={styles.buttonContainer}>
+      </KeyboardAwareScrollView>
+      <KeyboardStickyView
+        style={styles.buttonContainer}
+        offset={{ closed: 0, opened: 16 }}
+      >
         <CustomButton
           mode="outlined"
           onPress={onCancel}
@@ -178,7 +194,7 @@ export default function RecipeForm({
         >
           {submitLabel}
         </CustomButton>
-      </View>
-    </ScrollView>
+      </KeyboardStickyView>
+    </View>
   );
 }

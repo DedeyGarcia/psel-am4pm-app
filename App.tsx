@@ -4,15 +4,18 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './src/lib/queryClient';
 import { RootNavigator } from './src/navigation/RootNavigator';
 import { theme } from './src/theme';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <QueryClientProvider client={queryClient}>
-        <PaperProvider theme={theme}>
-          <RootNavigator />
-        </PaperProvider>
-      </QueryClientProvider>
-    </SafeAreaProvider>
+    <KeyboardProvider>
+      <SafeAreaProvider>
+        <QueryClientProvider client={queryClient}>
+          <PaperProvider theme={theme}>
+            <RootNavigator />
+          </PaperProvider>
+        </QueryClientProvider>
+      </SafeAreaProvider>
+    </KeyboardProvider>
   );
 }

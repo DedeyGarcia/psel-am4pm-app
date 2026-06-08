@@ -14,7 +14,11 @@ export default function CustomTextInput(props: CustomTextInputProps) {
   const styles = makeStyles(theme, props.maxWidth);
   return (
     <View style={styles.root}>
-      <TextInput mode="outlined" {...props} />
+      <TextInput
+        outlineStyle={{ borderRadius: theme.spacing.md }}
+        mode="outlined"
+        {...props}
+      />
       {props.errorMessage && (
         <Text variant="bodySmall" style={{ color: theme.colors.error }}>
           {props.errorMessage}
