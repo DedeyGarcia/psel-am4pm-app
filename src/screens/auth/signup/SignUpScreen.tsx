@@ -9,6 +9,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignUp } from '../../../hooks/useSignUp';
 import { CreateAccountFormData, createAccountSchema } from './schema';
+import { getErrorMessage } from '../../../lib/getErrorMessage';
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
@@ -101,9 +102,12 @@ export default function SignUpScreen() {
       </CustomButton>
       {error && (
         <Text variant="bodySmall" style={{ color: theme.colors.error }}>
-          Erro ao Criar Conta: {error.message}
+          {getErrorMessage(error, {
+            409: 'Já existe uma conta com esse login.',
+          })}
         </Text>
       )}
+
       <CustomButton
         mode="outlined"
         fullWidth

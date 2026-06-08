@@ -9,6 +9,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLogin } from '../../../hooks/useLogin';
 import { LoginFormData, loginSchema } from './schema';
+import { getErrorMessage } from '../../../lib/getErrorMessage';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -80,10 +81,11 @@ export default function LoginScreen() {
         Entrar
       </CustomButton>
       {error && (
-        <Text variant="bodySmall" style={{ color: theme.colors.error }}>
-          Erro ao fazer Login: Login ou Senha inválidos
+        <Text style={{ color: theme.colors.error }}>
+          {getErrorMessage(error, { 401: 'Login ou senha inválidos.' })}
         </Text>
       )}
+
       <CustomButton
         mode="outlined"
         fullWidth
