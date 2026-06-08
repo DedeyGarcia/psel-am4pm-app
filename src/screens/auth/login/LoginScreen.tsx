@@ -7,15 +7,8 @@ import CustomTextInput from '../../../components/CustomTextInput/CustomTextInput
 import CustomButton from '../../../components/CustomButton/CustomButton';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import { useLogin } from '../../../hooks/useLogin';
-
-const loginSchema = z.object({
-  login: z.string().min(1, 'Este campo é obrigatório.'),
-  password: z.string().min(1, 'Este campo é obrigatório.'),
-});
-
-type LoginFormData = z.infer<typeof loginSchema>;
+import { LoginFormData, loginSchema } from './schema';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -88,7 +81,7 @@ export default function LoginScreen() {
       </CustomButton>
       {error && (
         <Text variant="bodySmall" style={{ color: theme.colors.error }}>
-          Login ou Senha inválidos
+          Erro ao fazer Login: Login ou Senha inválidos
         </Text>
       )}
       <CustomButton

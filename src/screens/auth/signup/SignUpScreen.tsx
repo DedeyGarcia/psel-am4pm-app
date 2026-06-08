@@ -5,18 +5,10 @@ import CustomButton from '../../../components/CustomButton/CustomButton';
 import CustomTextInput from '../../../components/CustomTextInput/CustomTextInput';
 import { makeStyles } from './styles';
 import { useAppTheme } from '../../../theme';
-import * as z from 'zod';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignUp } from '../../../hooks/useSignUp';
-
-const createAccountSchema = z.object({
-  name: z.string().min(1, 'Este campo é obrigatório.'),
-  login: z.string().min(1, 'Este campo é obrigatório.'),
-  password: z.string().min(6, 'Senha deve ter pelo menos 6 caracteres.'),
-});
-
-type CreateAccountFormData = z.infer<typeof createAccountSchema>;
+import { CreateAccountFormData, createAccountSchema } from './schema';
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
@@ -109,7 +101,7 @@ export default function SignUpScreen() {
       </CustomButton>
       {error && (
         <Text variant="bodySmall" style={{ color: theme.colors.error }}>
-          Erro ao criar conta
+          Erro ao Criar Conta: {error.message}
         </Text>
       )}
       <CustomButton
