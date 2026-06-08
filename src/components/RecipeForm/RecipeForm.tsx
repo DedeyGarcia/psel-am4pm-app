@@ -18,6 +18,8 @@ import {
   KeyboardStickyView,
 } from 'react-native-keyboard-controller';
 import { Category } from '../../../types/category';
+import { Option } from 'react-native-paper-dropdown';
+import CustomDropdown from '../CustomDropdown/CustomDropdown';
 
 type RecipeFormProps = {
   initialValues?: Partial<RecipeFormDataInput>;
@@ -34,6 +36,7 @@ export default function RecipeForm({
   isPending,
   onSubmit,
   error,
+  categories,
 }: RecipeFormProps) {
   const theme = useAppTheme();
   const styles = makeStyles(theme);
@@ -43,6 +46,11 @@ export default function RecipeForm({
   const onCancel = () => {
     navigation.goBack();
   };
+
+  const categoriesAsOptions: Option[] = categories.map(c => ({
+    value: c.id.toString(),
+    label: c.name,
+  }));
 
   const {
     control,
@@ -83,16 +91,16 @@ export default function RecipeForm({
           )}
           name="name"
         />
-        {/* TODO: Criar um input de select para categorias */}
         <Controller
           control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <CustomTextInput
+          render={({ field: { onChange, value } }) => (
+            <CustomDropdown
               label="Categoria"
-              placeholder="Digite a categoria"
-              onBlur={onBlur}
-              onChangeText={onChange}
+              placeholder="Selecione a categoria"
+              mode="outlined"
+              options={categoriesAsOptions}
               value={value}
+              onSelect={onChange}
               error={!!errors.categoryId}
               errorMessage={errors.categoryId?.message}
             />

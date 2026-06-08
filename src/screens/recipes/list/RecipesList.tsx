@@ -1,4 +1,4 @@
-import { FlatList, View } from 'react-native';
+import { View } from 'react-native';
 import { useRecipes } from '../../../hooks/recipe/useRecipes';
 import { Recipe } from '../../../../types/recipe';
 import RecipeCard from './components/RecipeCard';
@@ -6,6 +6,7 @@ import { ActivityIndicator, FAB, Text } from 'react-native-paper';
 import { useAppTheme } from '../../../theme';
 import { makeStyles } from './styles';
 import { useNavigation } from '@react-navigation/native';
+import { FlashList } from '@shopify/flash-list';
 
 export default function RecipesList() {
   const { data, isPending, error } = useRecipes();
@@ -25,7 +26,7 @@ export default function RecipesList() {
 
   if (isPending) {
     return (
-      <View style={styles.root}>
+      <View style={styles.loadingOrErrorContainer}>
         <ActivityIndicator size={'large'} animating />
       </View>
     );
@@ -33,7 +34,7 @@ export default function RecipesList() {
 
   if (error) {
     return (
-      <View style={styles.root}>
+      <View style={styles.loadingOrErrorContainer}>
         <Text variant="titleLarge">Erro ao carregar receitas</Text>
       </View>
     );
@@ -41,7 +42,7 @@ export default function RecipesList() {
 
   return (
     <View style={styles.root}>
-      <FlatList
+      <FlashList
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
