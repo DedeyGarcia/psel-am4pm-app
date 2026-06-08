@@ -9,7 +9,7 @@ export function useLogin() {
     mutationFn: (credentials: LoginCredentials) =>
       authService.login(credentials),
     onSuccess(data) {
-      signIn(data);
+      signIn(data.access_token);
     },
   });
 }

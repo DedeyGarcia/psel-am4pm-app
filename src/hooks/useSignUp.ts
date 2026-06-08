@@ -29,7 +29,7 @@ export function useSignUp() {
       }
     },
     onSuccess(data) {
-      signIn(data);
+      signIn(data.access_token);
     },
   });
 }

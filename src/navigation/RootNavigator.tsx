@@ -7,6 +7,8 @@ import { Text } from 'react-native-paper';
 import LoginScreen from '../screens/auth/login/LoginScreen';
 import SignUpScreen from '../screens/auth/signup/SignUpScreen';
 import RecipesList from '../screens/recipes/list/RecipesList';
+import { AppHeader } from './AppHeader';
+import RecipeDetails from '../screens/recipes/details/RecipeDetails';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -20,10 +22,11 @@ export function RootNavigator() {
   const token = useAuthStore(state => state.token);
   const hasHydrated = useAuthStore(state => state.hasHydrated);
 
+  // TODO: Add Splash Screen
   if (!hasHydrated) {
     return (
       <View>
-        <Text>Carregando...</Text>
+        <Text>Splash Screen</Text>
       </View>
     );
   }
@@ -32,15 +35,26 @@ export function RootNavigator() {
     <NavigationContainer>
       <RootStack.Navigator>
         {token ? (
-          <>
-            <RootStack.Screen name="Recipes" component={RecipesList} />
-            <RootStack.Screen name="RecipeDetails" component={() => <></>} />
-          </>
+          <RootStack.Group
+            // eslint-disable-next-line react/no-unstable-nested-components
+            screenOptions={{ header: props => <AppHeader {...props} /> }}
+          >
+            <RootStack.Screen
+              name="Recipes"
+              component={RecipesList}
+              options={{ title: 'Minhas Receitas' }}
+            />
+            <RootStack.Screen
+              name="RecipeDetails"
+              component={RecipeDetails}
+              options={{ title: 'Detalhes da Receita' }}
+            />
+          </RootStack.Group>
         ) : (
-          <>
+          <RootStack.Group screenOptions={{ headerShown: false }}>
             <RootStack.Screen name="Login" component={LoginScreen} />
             <RootStack.Screen name="SignUp" component={SignUpScreen} />
-          </>
+          </RootStack.Group>
         )}
       </RootStack.Navigator>
     </NavigationContainer>

@@ -1,15 +1,41 @@
-import { View } from 'react-native';
-import CustomButton from '../../../components/CustomButton/CustomButton';
-import { useAuthStore } from '../../../store/authStore';
+import { FlatList, View } from 'react-native';
+import { useRecipes } from '../../../hooks/recipe/useRecipes';
+import { Recipe } from '../../../../types/recipe';
+import RecipeCard from './components/RecipeCard';
+import { ActivityIndicator, Text } from 'react-native-paper';
 
 export default function RecipesList() {
-  const signOut = useAuthStore(store => store.signOut);
+  const { data, isLoading, error } = useRecipes();
+
+  const renderItem = ({ item }: { item: Recipe }) => {
+    return <RecipeCard item={item} />;
+  };
+
+  const keyExtractor = (item: Recipe) => item.id.toString();
+
+  if (isLoading) {
+    return (
+      <View>
+        <ActivityIndicator size={'large'} animating />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View>
+        <Text variant="titleLarge">Erro ao carregar receitas</Text>
+      </View>
+    );
+  }
 
   return (
     <View>
-      <CustomButton mode="contained" fullWidth onPress={signOut}>
-        Sair
-      </CustomButton>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+      />
     </View>
   );
 }

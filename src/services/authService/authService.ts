@@ -1,4 +1,8 @@
-import { LoginCredentials, SignUpCredentials } from '../../../types/auth';
+import {
+  LoginCredentials,
+  Session,
+  SignUpCredentials,
+} from '../../../types/auth';
 import { apiClient } from '../../api/client';
 import {
   LoginResponseDTO,
@@ -6,17 +10,18 @@ import {
   SignUpRequestDTO,
   SignUpResponseDTO,
 } from './types';
+import { User } from '../../../types/user';
 
 export const authService = {
-  login: async (credentials: LoginCredentials) => {
+  login: async (credentials: LoginCredentials): Promise<Session> => {
     const { data } = await apiClient.post<LoginResponseDTO>('/auth/login', {
       login: credentials.login,
       senha: credentials.password,
     } satisfies LoginRequestDTO);
-    return data.access_token;
+    return data;
   },
 
-  signUp: async (credentials: SignUpCredentials) => {
+  signUp: async (credentials: SignUpCredentials): Promise<User> => {
     const { data } = await apiClient.post<SignUpResponseDTO>('/usuarios', {
       nome: credentials.name,
       login: credentials.login,
