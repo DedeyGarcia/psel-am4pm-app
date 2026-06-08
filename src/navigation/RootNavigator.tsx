@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthStore } from '../store/authStore';
@@ -41,7 +42,11 @@ export function RootNavigator() {
         {token ? (
           <RootStack.Group
             screenOptions={{ header: AppHeader }}
-            screenLayout={AuthenticatedScreensLayout}
+            screenLayout={({ children }) => (
+              <AuthenticatedScreensLayout>
+                {children}
+              </AuthenticatedScreensLayout>
+            )}
           >
             <RootStack.Screen
               name="Recipes"
@@ -67,7 +72,9 @@ export function RootNavigator() {
         ) : (
           <RootStack.Group
             screenOptions={{ headerShown: false }}
-            screenLayout={PublicScreensLayout}
+            screenLayout={({ children }) => (
+              <PublicScreensLayout>{children}</PublicScreensLayout>
+            )}
           >
             <RootStack.Screen name="Login" component={LoginScreen} />
             <RootStack.Screen name="SignUp" component={SignUpScreen} />
