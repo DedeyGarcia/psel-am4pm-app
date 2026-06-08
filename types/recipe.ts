@@ -10,3 +10,15 @@ export interface Recipe {
   createdAt: string;
   updatedAt: string;
 }
+
+export type CreateRecipe = Pick<
+  Recipe,
+  | 'categoryId'
+  | 'name'
+  | 'preparationTimeMinutes'
+  | 'servings'
+  | 'directions'
+  | 'ingredients'
+>;
+
+export type UpdateRecipe = Partial<CreateRecipe>;

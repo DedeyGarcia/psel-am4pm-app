@@ -12,12 +12,14 @@ import { useAppTheme } from '../../theme';
 import { makeStyles } from './styles';
 import CustomButton from '../CustomButton/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import { getErrorMessage } from '../../lib/getErrorMessage';
 
 type RecipeFormProps = {
   initialValues?: Partial<RecipeFormDataInput>;
   onSubmit: (data: RecipeFormDataOutput) => void;
   isPending?: boolean;
   submitLabel: string;
+  error?: Error | null;
 };
 
 export default function RecipeForm({
@@ -25,6 +27,7 @@ export default function RecipeForm({
   initialValues,
   isPending,
   onSubmit,
+  error,
 }: RecipeFormProps) {
   const theme = useAppTheme();
   const styles = makeStyles(theme);
@@ -152,7 +155,11 @@ export default function RecipeForm({
         )}
         name="directions"
       />
-
+      {error && (
+        <Text style={{ color: theme.colors.error }}>
+          {getErrorMessage(error)}
+        </Text>
+      )}
       <View style={styles.buttonContainer}>
         <CustomButton
           mode="outlined"

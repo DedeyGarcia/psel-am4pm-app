@@ -11,7 +11,7 @@ export interface RecipeResponseDTO {
   alterado_em: string;
 }
 
-export type RecipeCreateDTO = Pick<
+export type CreateRecipeRequestDTO = Pick<
   RecipeResponseDTO,
   | 'nome'
   | 'id_categorias'
@@ -20,3 +20,5 @@ export type RecipeCreateDTO = Pick<
   | 'ingredientes'
   | 'modo_preparo'
 >;
+
+export type UpdateRecipeRequestDTO = Partial<CreateRecipeRequestDTO>;

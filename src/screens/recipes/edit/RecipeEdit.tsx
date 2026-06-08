@@ -7,15 +7,42 @@ import { RouteProp } from '@react-navigation/native';
 import { ActivityIndicator, Text } from 'react-native-paper';
 import { useAppTheme } from '../../../theme';
 import { makeStyles } from './styles';
+import { useEditRecipe } from '../../../hooks/recipe/useEditRecipe';
+import { useNavigation } from '@react-navigation/native';
+import { UpdateRecipe } from '../../../../types/recipe';
 
 type RecipeEditRouteProp = RouteProp<RootStackParamList, 'RecipeEdit'>;
 
 export default function RecipeEdit({ route }: { route: RecipeEditRouteProp }) {
-  const { data, isPending, error } = useRecipe(route.params.id);
+  const {
+    data: getRecipeData,
+    isPending: isPendingGetRecipeData,
+    error: errorGetRecipeData,
+  } = useRecipe(route.params.id);
   const theme = useAppTheme();
   const styles = makeStyles(theme);
 
-  if (isPending) {
+  const {
+    mutate,
+    isPending: isPendingEditRecipe,
+    error: errorEditRecipe,
+  } = useEditRecipe();
+  const navigate = useNavigation();
+
+  console.log(route.params.id);
+
+  const onSubmit = (data: UpdateRecipe) => {
+    mutate(
+      { id: route.params.id, recipe: data },
+      {
+        onSuccess: () => {
+          navigate.goBack();
+        },
+      },
+    );
+  };
+
+  if (isPendingGetRecipeData) {
     return (
       <View style={styles.root}>
         <ActivityIndicator size={'large'} animating />
@@ -23,7 +50,7 @@ export default function RecipeEdit({ route }: { route: RecipeEditRouteProp }) {
     );
   }
 
-  if (error) {
+  if (errorGetRecipeData) {
     return (
       <View style={styles.root}>
         <Text variant="titleLarge">Erro ao carregar detalhes da receita</Text>
@@ -31,19 +58,21 @@ export default function RecipeEdit({ route }: { route: RecipeEditRouteProp }) {
     );
   }
   const initialData = {
-    name: data.name,
-    categoryId: String(data.categoryId),
-    preparationTimeMinutes: String(data.preparationTimeMinutes),
-    servings: String(data.servings),
-    ingredients: data.ingredients,
-    directions: data.directions,
+    name: getRecipeData.name,
+    categoryId: String(getRecipeData.categoryId),
+    preparationTimeMinutes: String(getRecipeData.preparationTimeMinutes),
+    servings: String(getRecipeData.servings),
+    ingredients: getRecipeData.ingredients,
+    directions: getRecipeData.directions,
   } satisfies RecipeFormDataInput;
 
   return (
     <RecipeForm
       initialValues={initialData}
       submitLabel="Editar"
-      onSubmit={() => {}}
+      onSubmit={onSubmit}
+      isPending={isPendingEditRecipe}
+      error={errorEditRecipe}
     />
   );
 }
