@@ -3,6 +3,10 @@ export interface LoginCredentials {
   password: string;
 }
 
+export interface SignUpCredentials extends LoginCredentials {
+  name: string;
+}
+
 export interface Session {
   access_token: string;
 }

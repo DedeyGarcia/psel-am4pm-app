@@ -5,28 +5,119 @@ import CustomButton from '../../../components/CustomButton/CustomButton';
 import CustomTextInput from '../../../components/CustomTextInput/CustomTextInput';
 import { makeStyles } from './styles';
 import { useAppTheme } from '../../../theme';
+import * as z from 'zod';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useSignUp } from '../../../hooks/useSignUp';
+
+const createAccountSchema = z.object({
+  name: z.string().min(1, 'Este campo é obrigatório.'),
+  login: z.string().min(1, 'Este campo é obrigatório.'),
+  password: z.string().min(6, 'Senha deve ter pelo menos 6 caracteres.'),
+});
+
+type CreateAccountFormData = z.infer<typeof createAccountSchema>;
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
   const theme = useAppTheme();
   const styles = makeStyles(theme);
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateAccountFormData>({
+    resolver: zodResolver(createAccountSchema),
+    defaultValues: {
+      name: '',
+      login: '',
+      password: '',
+    },
+  });
+
+  const { mutate, isPending, error } = useSignUp();
+
   const onLoginPress = () => {
     navigation.navigate('Login');
   };
 
-  const onSignUpPress = () => {};
+  const onSignUpPress: SubmitHandler<CreateAccountFormData> = data => {
+    mutate(data, {
+      onSuccess: () => {
+        navigation.navigate('Login');
+      },
+    });
+  };
 
   return (
     <View style={styles.container}>
       <Text variant="titleLarge">Receitas App</Text>
-      <CustomTextInput label="Nome" />
-      <CustomTextInput label="Email" />
-      <CustomTextInput label="Senha" />
-      <CustomButton mode="contained" fullWidth onPress={onSignUpPress}>
+      <Controller
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <CustomTextInput
+            label="Nome"
+            placeholder="Digite seu nome"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            error={!!errors.name}
+            errorMessage={errors.name?.message}
+          />
+        )}
+        name="name"
+      />
+      <Controller
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <CustomTextInput
+            label="Login"
+            placeholder="Digite seu login"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            error={!!errors.login}
+            errorMessage={errors.login?.message}
+          />
+        )}
+        name="login"
+      />
+      <Controller
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <CustomTextInput
+            label="Senha"
+            placeholder="Digite sua senha"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            error={!!errors.password}
+            errorMessage={errors.password?.message}
+          />
+        )}
+        name="password"
+      />
+      <CustomButton
+        mode="contained"
+        fullWidth
+        onPress={handleSubmit(onSignUpPress)}
+        loading={isPending}
+        disabled={isPending}
+      >
         Criar Conta
       </CustomButton>
-      <CustomButton mode="outlined" fullWidth onPress={onLoginPress}>
+      {error && (
+        <Text variant="bodySmall" style={{ color: theme.colors.error }}>
+          Erro ao criar conta
+        </Text>
+      )}
+      <CustomButton
+        mode="outlined"
+        fullWidth
+        onPress={onLoginPress}
+        disabled={isPending}
+      >
         Entrar
       </CustomButton>
     </View>

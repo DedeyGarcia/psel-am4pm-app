@@ -91,7 +91,12 @@ export default function LoginScreen() {
           Login ou Senha inválidos
         </Text>
       )}
-      <CustomButton mode="outlined" fullWidth onPress={onSignUpPress}>
+      <CustomButton
+        mode="outlined"
+        fullWidth
+        onPress={onSignUpPress}
+        disabled={isPending}
+      >
         Criar Conta
       </CustomButton>
     </View>
