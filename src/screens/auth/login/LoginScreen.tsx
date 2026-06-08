@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 import { makeStyles } from './styles';
 import { useAppTheme } from '../../../theme';
@@ -10,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useLogin } from '../../../hooks/useLogin';
 import { LoginFormData, loginSchema } from './schema';
 import { getErrorMessage } from '../../../lib/getErrorMessage';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -38,7 +38,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <Text variant="titleLarge">Receitas App</Text>
       <Controller
         control={control}
@@ -94,6 +94,6 @@ export default function LoginScreen() {
       >
         Criar Conta
       </CustomButton>
-    </View>
+    </KeyboardAvoidingView>
   );
 }

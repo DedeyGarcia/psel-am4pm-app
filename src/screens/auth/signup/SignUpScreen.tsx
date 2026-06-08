@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 import CustomButton from '../../../components/CustomButton/CustomButton';
 import CustomTextInput from '../../../components/CustomTextInput/CustomTextInput';
@@ -10,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignUp } from '../../../hooks/useSignUp';
 import { CreateAccountFormData, createAccountSchema } from './schema';
 import { getErrorMessage } from '../../../lib/getErrorMessage';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
@@ -44,7 +44,7 @@ export default function SignUpScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <Text variant="titleLarge">Receitas App</Text>
       <Controller
         control={control}
@@ -116,6 +116,6 @@ export default function SignUpScreen() {
       >
         Entrar
       </CustomButton>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
