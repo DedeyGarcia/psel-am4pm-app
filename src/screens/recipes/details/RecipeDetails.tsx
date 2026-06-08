@@ -26,7 +26,7 @@ export default function RecipeDetails({
 
   if (isPending) {
     return (
-      <View>
+      <View style={styles.root}>
         <ActivityIndicator size={'large'} animating />
       </View>
     );
@@ -34,8 +34,8 @@ export default function RecipeDetails({
 
   if (error) {
     return (
-      <View>
-        <Text variant="titleLarge">Erro ao carregar receita</Text>
+      <View style={styles.root}>
+        <Text variant="titleLarge">Erro ao carregar detalhes da receita</Text>
       </View>
     );
   }

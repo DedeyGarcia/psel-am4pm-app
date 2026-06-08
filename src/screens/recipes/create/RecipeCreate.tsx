@@ -1,10 +1,5 @@
-import { View } from 'react-native';
-import { Text } from 'react-native-paper';
+import RecipeForm from '../../../components/RecipeForm/RecipeForm';
 
 export function RecipeCreate() {
-  return (
-    <View>
-      <Text>RecipeCreate</Text>
-    </View>
-  );
+  return <RecipeForm submitLabel="Criar" onSubmit={() => {}} />;
 }

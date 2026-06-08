@@ -61,7 +61,7 @@ export function RootNavigator() {
             <RootStack.Screen
               name="RecipeCreate"
               component={RecipeCreate}
-              options={{ title: 'Criar Receita' }}
+              options={{ title: 'Nova Receita' }}
             />
             <RootStack.Screen
               name="RecipeEdit"
