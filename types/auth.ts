@@ -3,6 +3,6 @@ export interface LoginCredentials {
   password: string;
 }
 
-export interface LoginResponse {
+export interface Session {
   access_token: string;
 }
