@@ -6,6 +6,7 @@ import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 import LoginScreen from '../screens/auth/login/LoginScreen';
 import SignUpScreen from '../screens/auth/signup/SignUpScreen';
+import RecipesList from '../screens/recipes/list/RecipesList';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -32,7 +33,7 @@ export function RootNavigator() {
       <RootStack.Navigator>
         {token ? (
           <>
-            <RootStack.Screen name="Recipes" component={() => <></>} />
+            <RootStack.Screen name="Recipes" component={RecipesList} />
             <RootStack.Screen name="RecipeDetails" component={() => <></>} />
           </>
         ) : (

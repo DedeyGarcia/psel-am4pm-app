@@ -1,9 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
-import { Button, Text, TextInput } from 'react-native-paper';
+import { Text } from 'react-native-paper';
+import CustomButton from '../../../components/CustomButton/CustomButton';
+import CustomTextInput from '../../../components/CustomTextInput/CustomTextInput';
+import { makeStyles } from './styles';
+import { useAppTheme } from '../../../theme';
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
+  const theme = useAppTheme();
+  const styles = makeStyles(theme);
 
   const onLoginPress = () => {
     navigation.navigate('Login');
@@ -12,17 +18,17 @@ export default function SignUpScreen() {
   const onSignUpPress = () => {};
 
   return (
-    <View>
-      <Text>LoginScreen</Text>
-      <TextInput label="Nome" />
-      <TextInput label="Email" />
-      <TextInput label="Senha" />
-      <Button mode="contained" onPress={onSignUpPress}>
+    <View style={styles.container}>
+      <Text variant="titleLarge">Receitas App</Text>
+      <CustomTextInput label="Nome" />
+      <CustomTextInput label="Email" />
+      <CustomTextInput label="Senha" />
+      <CustomButton mode="contained" fullWidth onPress={onSignUpPress}>
         Criar Conta
-      </Button>
-      <Button mode="outlined" onPress={onLoginPress}>
-        Fazer Login
-      </Button>
+      </CustomButton>
+      <CustomButton mode="outlined" fullWidth onPress={onLoginPress}>
+        Entrar
+      </CustomButton>
     </View>
   );
 }
