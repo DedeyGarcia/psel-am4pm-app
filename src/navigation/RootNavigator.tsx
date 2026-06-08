@@ -9,6 +9,10 @@ import SignUpScreen from '../screens/auth/signup/SignUpScreen';
 import RecipesList from '../screens/recipes/list/RecipesList';
 import { AppHeader } from './AppHeader';
 import RecipeDetails from '../screens/recipes/details/RecipeDetails';
+import { RecipeCreate } from '../screens/recipes/create/RecipeCreate';
+import RecipeEdit from '../screens/recipes/edit/RecipeEdit';
+import { AuthenticatedScreensLayout } from './layouts/authenticated/AuthenticatedScreensLayout';
+import { PublicScreensLayout } from './layouts/public/PublicScreensLayout';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -36,8 +40,8 @@ export function RootNavigator() {
       <RootStack.Navigator>
         {token ? (
           <RootStack.Group
-            // eslint-disable-next-line react/no-unstable-nested-components
-            screenOptions={{ header: props => <AppHeader {...props} /> }}
+            screenOptions={{ header: AppHeader }}
+            screenLayout={AuthenticatedScreensLayout}
           >
             <RootStack.Screen
               name="Recipes"
@@ -49,9 +53,22 @@ export function RootNavigator() {
               component={RecipeDetails}
               options={{ title: 'Detalhes da Receita' }}
             />
+            <RootStack.Screen
+              name="RecipeCreate"
+              component={RecipeCreate}
+              options={{ title: 'Criar Receita' }}
+            />
+            <RootStack.Screen
+              name="RecipeEdit"
+              component={RecipeEdit}
+              options={{ title: 'Editar Receita' }}
+            />
           </RootStack.Group>
         ) : (
-          <RootStack.Group screenOptions={{ headerShown: false }}>
+          <RootStack.Group
+            screenOptions={{ headerShown: false }}
+            screenLayout={PublicScreensLayout}
+          >
             <RootStack.Screen name="Login" component={LoginScreen} />
             <RootStack.Screen name="SignUp" component={SignUpScreen} />
           </RootStack.Group>

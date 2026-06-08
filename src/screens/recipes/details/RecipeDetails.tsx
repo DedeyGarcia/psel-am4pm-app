@@ -1,8 +1,11 @@
 import { View } from 'react-native';
-import { ActivityIndicator, Text } from 'react-native-paper';
+import { ActivityIndicator, FAB, Text } from 'react-native-paper';
 import { useRecipe } from '../../../hooks/recipe/useRecipe';
 import type { RootStackParamList } from '../../../navigation/types';
 import type { RouteProp } from '@react-navigation/native';
+import { useAppTheme } from '../../../theme';
+import { makeStyles } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 type RecipeDetailsRouteProp = RouteProp<RootStackParamList, 'RecipeDetails'>;
 
@@ -12,6 +15,14 @@ export default function RecipeDetails({
   route: RecipeDetailsRouteProp;
 }) {
   const { data, isPending, error } = useRecipe(route.params.id);
+
+  const theme = useAppTheme();
+  const styles = makeStyles(theme);
+  const navigation = useNavigation();
+
+  const onFabPress = () => {
+    navigation.navigate('RecipeEdit', { id: route.params.id });
+  };
 
   if (isPending) {
     return (
@@ -30,9 +41,10 @@ export default function RecipeDetails({
   }
 
   return (
-    <View>
+    <View style={styles.root}>
       <Text variant="titleLarge">{data?.nome}</Text>
       <Text variant="bodyMedium">{data?.modo_preparo}</Text>
+      <FAB style={styles.fab} icon="pencil" onPress={onFabPress} />
     </View>
   );
 }

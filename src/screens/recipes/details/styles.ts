@@ -3,10 +3,13 @@ import type { AppTheme } from '../../../theme';
 
 export const makeStyles = (theme: AppTheme) =>
   StyleSheet.create({
-    container: {
+    root: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      gap: theme.spacing.md,
+    },
+    fab: {
+      position: 'absolute',
+      margin: theme.spacing.md,
+      right: 0,
+      bottom: 0,
     },
   });

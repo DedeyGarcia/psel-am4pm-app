@@ -2,10 +2,20 @@ import { FlatList, View } from 'react-native';
 import { useRecipes } from '../../../hooks/recipe/useRecipes';
 import { Recipe } from '../../../../types/recipe';
 import RecipeCard from './components/RecipeCard';
-import { ActivityIndicator, Text } from 'react-native-paper';
+import { ActivityIndicator, FAB, Text } from 'react-native-paper';
+import { useAppTheme } from '../../../theme';
+import { makeStyles } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 export default function RecipesList() {
   const { data, isPending, error } = useRecipes();
+  const theme = useAppTheme();
+  const styles = makeStyles(theme);
+  const navigation = useNavigation();
+
+  const onFabPress = () => {
+    navigation.navigate('RecipeCreate');
+  };
 
   const renderItem = ({ item }: { item: Recipe }) => {
     return <RecipeCard item={item} />;
@@ -15,7 +25,7 @@ export default function RecipesList() {
 
   if (isPending) {
     return (
-      <View>
+      <View style={styles.root}>
         <ActivityIndicator size={'large'} animating />
       </View>
     );
@@ -23,19 +33,20 @@ export default function RecipesList() {
 
   if (error) {
     return (
-      <View>
+      <View style={styles.root}>
         <Text variant="titleLarge">Erro ao carregar receitas</Text>
       </View>
     );
   }
 
   return (
-    <View>
+    <View style={styles.root}>
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
       />
+      <FAB style={styles.fab} icon="plus" onPress={onFabPress} />
     </View>
   );
 }

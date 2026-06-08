@@ -3,4 +3,6 @@ export type RootStackParamList = {
   SignUp: undefined;
   Recipes: undefined;
   RecipeDetails: { id: string };
+  RecipeCreate: undefined;
+  RecipeEdit: { id: string };
 };
