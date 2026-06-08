@@ -5,7 +5,7 @@ import RecipeCard from './components/RecipeCard';
 import { ActivityIndicator, Text } from 'react-native-paper';
 
 export default function RecipesList() {
-  const { data, isLoading, error } = useRecipes();
+  const { data, isPending, error } = useRecipes();
 
   const renderItem = ({ item }: { item: Recipe }) => {
     return <RecipeCard item={item} />;
@@ -13,7 +13,7 @@ export default function RecipesList() {
 
   const keyExtractor = (item: Recipe) => item.id.toString();
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <View>
         <ActivityIndicator size={'large'} animating />

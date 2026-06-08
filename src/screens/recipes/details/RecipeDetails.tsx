@@ -11,9 +11,9 @@ export default function RecipeDetails({
 }: {
   route: RecipeDetailsRouteProp;
 }) {
-  const { data, isLoading, error } = useRecipe(route.params.id);
+  const { data, isPending, error } = useRecipe(route.params.id);
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <View>
         <ActivityIndicator size={'large'} animating />
