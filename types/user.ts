@@ -1,7 +1,7 @@
 export interface User {
   id: number;
-  nome: string;
+  name: string;
   login: string;
-  criado_em: string;
-  alterado_em: string;
+  createdAt: string;
+  updatedAt: string;
 }

@@ -31,12 +31,12 @@ export default function RecipeEdit({ route }: { route: RecipeEditRouteProp }) {
     );
   }
   const initialData = {
-    name: data.nome,
-    categoryId: String(data.id_categorias),
-    preparationTimeMinutes: String(data.tempo_preparo_minutos),
-    servings: String(data.porcoes),
-    ingredients: data.ingredientes,
-    directions: data.modo_preparo,
+    name: data.name,
+    categoryId: String(data.categoryId),
+    preparationTimeMinutes: String(data.preparationTimeMinutes),
+    servings: String(data.servings),
+    ingredients: data.ingredients,
+    directions: data.directions,
   } satisfies RecipeFormDataInput;
 
   return (

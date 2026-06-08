@@ -27,6 +27,12 @@ export const authService = {
       login: credentials.login,
       senha: credentials.password,
     } satisfies SignUpRequestDTO);
-    return data;
+    return {
+      id: data.id,
+      name: data.nome,
+      login: data.login,
+      createdAt: data.criado_em,
+      updatedAt: data.alterado_em,
+    };
   },
 };

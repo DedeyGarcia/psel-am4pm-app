@@ -42,8 +42,8 @@ export default function RecipeDetails({
 
   return (
     <View style={styles.root}>
-      <Text variant="titleLarge">{data?.nome}</Text>
-      <Text variant="bodyMedium">{data?.modo_preparo}</Text>
+      <Text variant="titleLarge">{data?.name}</Text>
+      <Text variant="bodyMedium">{data?.directions}</Text>
       <FAB style={styles.fab} icon="pencil" onPress={onFabPress} />
     </View>
   );

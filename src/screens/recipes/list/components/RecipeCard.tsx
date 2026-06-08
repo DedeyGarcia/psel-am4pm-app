@@ -11,9 +11,9 @@ export default function RecipeCard({ item }: { item: Recipe }) {
 
   return (
     <Card onPress={onPress}>
-      <Card.Title title={item.nome} />
+      <Card.Title title={item.name} />
       <Card.Content>
-        <Text>{item.modo_preparo}</Text>
+        <Text>{item.directions}</Text>
       </Card.Content>
     </Card>
   );
