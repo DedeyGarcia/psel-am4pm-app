@@ -11,7 +11,6 @@ import CustomTextInput from '../CustomTextInput/CustomTextInput';
 import { useAppTheme } from '../../theme';
 import { makeStyles } from './styles';
 import CustomButton from '../CustomButton/CustomButton';
-import { useNavigation } from '@react-navigation/native';
 import { getErrorMessage } from '../../lib/getErrorMessage';
 import {
   KeyboardAwareScrollView,
@@ -40,12 +39,6 @@ export default function RecipeForm({
 }: RecipeFormProps) {
   const theme = useAppTheme();
   const styles = makeStyles(theme);
-
-  const navigation = useNavigation();
-
-  const onCancel = () => {
-    navigation.goBack();
-  };
 
   const categoriesAsOptions: Option[] = categories.map(c => ({
     value: c.id.toString(),
@@ -185,14 +178,6 @@ export default function RecipeForm({
         style={styles.buttonContainer}
         offset={{ closed: 0, opened: 16 }}
       >
-        <CustomButton
-          mode="outlined"
-          onPress={onCancel}
-          disabled={isPending}
-          style={styles.button}
-        >
-          Cancelar
-        </CustomButton>
         <CustomButton
           mode="contained"
           onPress={handleSubmit(onSubmit)}

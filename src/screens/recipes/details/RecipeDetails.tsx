@@ -34,9 +34,12 @@ export default function RecipeDetails({
   };
 
   const onDeletePress = () => {
-    mutate(route.params.id);
-    closeMenu();
-    navigation.goBack();
+    mutate(route.params.id, {
+      onSuccess: () => {
+        closeMenu();
+        navigation.goBack();
+      },
+    });
   };
 
   if (isPending) {
@@ -72,8 +75,16 @@ export default function RecipeDetails({
             />
           }
         >
-          <Menu.Item onPress={onEditPress} title="Editar" />
-          <Menu.Item onPress={onDeletePress} title="Deletar" />
+          <Menu.Item
+            onPress={onEditPress}
+            title="Editar"
+            trailingIcon={'pencil'}
+          />
+          <Menu.Item
+            onPress={onDeletePress}
+            title="Deletar"
+            trailingIcon={'delete'}
+          />
         </Menu>
       </View>
     </View>

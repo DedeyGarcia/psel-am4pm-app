@@ -11,9 +11,7 @@ export const makeStyles = (theme: AppTheme) =>
       gap: theme.spacing.sm,
     },
     buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      gap: theme.spacing.md,
+      flex: 1,
       backgroundColor: theme.colors.background,
       paddingVertical: theme.spacing.sm,
     },
