@@ -73,11 +73,13 @@ export default function RecipesListFilters() {
       />
       <View style={styles.categoriesHeader}>
         <Text variant="titleMedium">Categorias</Text>
-        <IconButton
-          icon="close"
-          size={theme.spacing.md}
-          onPress={onClearCategoriesPress}
-        />
+        {selectedCategories.length > 0 && (
+          <IconButton
+            icon="close"
+            size={theme.spacing.md}
+            onPress={onClearCategoriesPress}
+          />
+        )}
       </View>
 
       <FlashList

@@ -18,7 +18,9 @@ export default function RecipesList({ filteredRecipes }: RecipesListProps) {
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        listRef.current?.scrollToOffset({ offset: 0, animated: false });
+        listRef.current?.scrollToTop({
+          animated: false,
+        });
       });
     });
     return () => cancelAnimationFrame(id);
