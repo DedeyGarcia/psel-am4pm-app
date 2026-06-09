@@ -10,6 +10,7 @@ import { useLogin } from '../../../hooks/useLogin';
 import { LoginFormData, loginSchema } from './schema';
 import { getErrorMessage } from '../../../lib/getErrorMessage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import PasswordInput from '../../../components/PasswordInput/PasswordInput';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -41,6 +42,7 @@ export default function LoginScreen() {
     <KeyboardAwareScrollView
       contentContainerStyle={styles.container}
       bottomOffset={100}
+      keyboardShouldPersistTaps="handled"
     >
       <Text variant="titleLarge">Seu Livro de Receitas</Text>
       <Icon source="food-turkey" size={theme.spacing.xl} />
@@ -62,13 +64,12 @@ export default function LoginScreen() {
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
-          <CustomTextInput
+          <PasswordInput
             label="Senha"
             placeholder="Digite sua senha"
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            secureTextEntry
             error={!!errors.password}
             errorMessage={errors.password?.message}
           />
