@@ -46,11 +46,10 @@ export default function RecipesListFilters() {
         onPress={toggleCategorySelection}
         mode="outlined"
         style={{
-          backgroundColor: isSelected
-            ? theme.colors.primaryContainer
-            : undefined,
+          backgroundColor: isSelected ? theme.colors.surfaceVariant : undefined,
         }}
         showSelectedCheck={false}
+        selectedColor={theme.colors.onSurfaceVariant}
       >
         {item.name}
       </Chip>

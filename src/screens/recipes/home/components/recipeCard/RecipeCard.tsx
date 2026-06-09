@@ -5,6 +5,7 @@ import { useAppTheme } from '../../../../../theme';
 import { makeStyles } from './styles';
 import { View } from 'react-native';
 import { useCategories } from '../../../../../hooks/useCategory';
+import CustomButton from '../../../../../components/CustomButton/CustomButton';
 
 export default function RecipeCard({ item }: { item: Recipe }) {
   const navigation = useNavigation();
@@ -22,7 +23,7 @@ export default function RecipeCard({ item }: { item: Recipe }) {
   const ingredientsPreview = item.ingredients.replaceAll('\n', '');
 
   return (
-    <Card onPress={onPress}>
+    <Card mode="outlined">
       <Card.Content style={styles.content}>
         <Text variant="labelSmall">{categoryName}</Text>
         <View style={styles.titleRow}>
@@ -35,6 +36,11 @@ export default function RecipeCard({ item }: { item: Recipe }) {
           {ingredientsPreview}
         </Text>
       </Card.Content>
+      <Card.Actions>
+        <CustomButton mode="contained" onPress={onPress}>
+          Ver Detalhes
+        </CustomButton>
+      </Card.Actions>
     </Card>
   );
 }
