@@ -1,4 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
+import { useEffect } from 'react';
+import BootSplash from 'react-native-bootsplash';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthStore } from '../store/authStore';
@@ -12,7 +14,6 @@ import { RecipeCreate } from '../screens/recipes/create/RecipeCreate';
 import RecipeEdit from '../screens/recipes/edit/RecipeEdit';
 import { AuthenticatedScreensLayout } from './layouts/authenticated/AuthenticatedScreensLayout';
 import { PublicScreensLayout } from './layouts/public/PublicScreensLayout';
-import SplashScreen from '../screens/splash/SplashScreen';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -26,8 +27,14 @@ export function RootNavigator() {
   const token = useAuthStore(state => state.token);
   const hasHydrated = useAuthStore(state => state.hasHydrated);
 
+  useEffect(() => {
+    if (hasHydrated) {
+      BootSplash.hide({ fade: true });
+    }
+  }, [hasHydrated]);
+
   if (!hasHydrated) {
-    return <SplashScreen />;
+    return null;
   }
 
   return (

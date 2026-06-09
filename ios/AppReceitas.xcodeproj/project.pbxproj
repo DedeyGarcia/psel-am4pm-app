@@ -14,6 +14,8 @@
 		E97E26ACDBD545DB985F17CC /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1A5A18F1AF14D74B01FFDC9 /* Montserrat-Bold.ttf */; };
 		2296E062B12548809D4D2BAF /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 899F7FB4790B441587FB2719 /* Montserrat-Medium.ttf */; };
 		CF2AF0B559434D56A9A8CD5A /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CB1B37F0ACA64AC5B3F6706F /* Montserrat-Regular.ttf */; };
+		4150FF48804D45D59B3A9351 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADA8F576F980464EBCB5A016 /* BootSplash.storyboard */; };
+		401018D3F27D4B36A4130017 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 653F2A27525044C08B87A23B /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		B1A5A18F1AF14D74B01FFDC9 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; name = "Montserrat-Bold.ttf"; path = "../assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		899F7FB4790B441587FB2719 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; name = "Montserrat-Medium.ttf"; path = "../assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		CB1B37F0ACA64AC5B3F6706F /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; name = "Montserrat-Regular.ttf"; path = "../assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		ADA8F576F980464EBCB5A016 /* BootSplash.storyboard */ = {isa = PBXFileReference; name = "BootSplash.storyboard"; path = "AppReceitas/BootSplash.storyboard"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		653F2A27525044C08B87A23B /* Colors.xcassets */ = {isa = PBXFileReference; name = "Colors.xcassets"; path = "AppReceitas/Colors.xcassets"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = folder.assetcatalog; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				ADA8F576F980464EBCB5A016 /* BootSplash.storyboard */,
+				653F2A27525044C08B87A23B /* Colors.xcassets */,
 			);
 			name = AppReceitas;
 			sourceTree = "<group>";
@@ -180,6 +186,8 @@
 				E97E26ACDBD545DB985F17CC /* Montserrat-Bold.ttf in Resources */,
 				2296E062B12548809D4D2BAF /* Montserrat-Medium.ttf in Resources */,
 				CF2AF0B559434D56A9A8CD5A /* Montserrat-Regular.ttf in Resources */,
+				4150FF48804D45D59B3A9351 /* BootSplash.storyboard in Resources */,
+				401018D3F27D4B36A4130017 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
