@@ -1,97 +1,129 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Seu Livro de Receitas
 
-# Getting Started
+Aplicativo mobile (Bare React Native) desenvolvido para o processo seletivo da empresa A4PM. Mais informações podem ser encontradas em: [Especificação do Processo Seletivo A4PM](https://gitlab.devrgesus.com.br/codelabs/desafio_rg_receitas_culinarias).
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 
-## Step 1: Start Metro
+---
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Pré-requisitos
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- **Node.js** `>= 22.11.0`
+- Ambiente React Native configurado para Android.
+- Um dispositivo Android físico (ou emulador) para rodar.
+
+---
+
+## 1. Instalar dependências
 
 ```sh
-# Using npm
+npm install
+```
+
+## 2. Configurar o `.env`
+
+O projeto usa [`react-native-dotenv`](https://github.com/goatandsheep/react-native-dotenv) com modo **`safe`**, ou seja: o arquivo `.env` é **obrigatório** e precisa conter **todas** as chaves presentes no `.env.example`, senão o build falha.
+
+Copie o exemplo e preencha os valores:
+
+```sh
+cp .env.example .env
+```
+
+```env
+RECEIPES_API=https://sua-api.com
+API_KEY=sua-chave-aqui
+```
+
+---
+
+## Rodando em desenvolvimento
+
+São necessários **dois terminais**: um para o Metro (bundler) e outro para subir o app no aparelho.
+
+**Terminal 1 - Metro:**
+
+```sh
 npm start
-
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
+**Terminal 2 - build de desenvolvimento no Android:**
 
 ```sh
-# Using npm
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
-### iOS
+> Esse comando instala uma variante de debug com `appIdSuffix debug` (pacote `com.appreceitas.debug`), então ela **convive** com uma eventual build de release instalada no mesmo aparelho.
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+### Avisos importantes
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+- ⚠️ **Se o Metro perguntar se você quer abrir uma nova instância** (porque já há um Metro rodando no Terminal 1), escolha **Não / No**. Use o Metro que já está aberto.
+- ⚠️ **Se a build de desenvolvimento travar/congelar na splash screen:** é só **fechar o app e abrir de novo** no aparelho. É um comportamento conhecido dessa variante de debug e não afeta a build de release.
+
+---
+
+## Gerando a build de release (APK)
+
+Para instalar/distribuir o app sem depender do Metro, gere a build de release.
+
+### Opção 1 - instalar direto no aparelho conectado
 
 ```sh
-bundle install
+npm run android:release
 ```
 
-Then, and every time you update your native dependencies, run:
+### Opção 2 - gerar apenas o arquivo APK
 
 ```sh
-bundle exec pod install
+npm run apk:release
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+O APK fica em:
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+```
+android/app/build/outputs/apk/release/app-release.apk
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+Transfira esse arquivo para o celular e instale (talvez seja necessário permitir *"Instalar apps de fontes desconhecidas"*).
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+---
 
-## Step 3: Modify your app
+## Baixar o APK pronto (Google Drive)
 
-Now that you have successfully run the app, let's make changes!
+Se preferir não buildar, baixe o APK já compilado:
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+🔗 **Link do Google Drive:** [`https://drive.google.com/file/d/1EbKDTqbXULLwZeC98SH6FvvJQ0TdhI32/view?usp=drive_link`](https://drive.google.com/file/d/1EbKDTqbXULLwZeC98SH6FvvJQ0TdhI32/view?usp=drive_link)
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+No celular, após baixar, toque no arquivo `.apk` e permita a instalação de fontes desconhecidas se solicitado.
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+---
 
-## Congratulations! :tada:
+## Arquitetura do projeto
 
-You've successfully run and modified your React Native App. :partying_face:
+Código-fonte em [`src/`](src/), organizado por responsabilidade:
 
-### Now what?
+```
+src/
+├── api/          # Instância do axios + interceptors (auth e tratamento de 401)
+├── components/   # Componentes reutilizáveis (CustomButton, RecipeForm, etc.)
+├── hooks/        # Hooks de dados (TanStack Query): useRecipes, useLogin, ...
+├── lib/          # Utilitários (queryClient, getErrorMessage)
+├── navigation/   # RootNavigator, layouts e tipos das rotas
+├── providers/    # AppProvider (agrega Paper, QueryClient, SafeArea, etc.)
+├── screens/      # Telas, agrupadas por domínio (auth, recipes)
+├── services/     # Camada de serviço: chamadas à API + mapeamento DTO ↔ domínio
+├── store/        # Estado global de UI/sessão com Zustand (authStore, filtros)
+└── theme/        # Tema Material Design 3 (cores, fontes Montserrat, spacing)
+```
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+Tipos de domínio compartilhados ficam em [`types/`](types/) na raiz.
 
-# Troubleshooting
+### Principais decisões e bibliotecas
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- **React Compiler** - o projeto compila com o [`babel-plugin-react-compiler`](https://react.dev/learn/react-compiler). Por isso **não há `useMemo`/`useCallback`/`React.memo` explícitos** no código: a memoização é feita automaticamente pelo compiler. As regras do compiler também são verificadas no lint (`eslint-plugin-react-hooks`), então evite quebrar as *Rules of React*.
+- **[React Native Paper](https://callstack.github.io/react-native-paper/)** - biblioteca de UI (Material Design 3).
+- **[Zustand](https://zustand-demo.pmnd.rs/)** - estado global.
+- **[TanStack Query](https://tanstack.com/query)** - estado de servidor (fetch/cache/mutations).
+- **[React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/)** - formulários e validação.
+- **[React Navigation](https://reactnavigation.org/)** - navegação, com tipagem das rotas.
+- **[@shopify/flash-list](https://shopify.github.io/flash-list/)** - listas performáticas.
+- **[react-native-bootsplash](https://github.com/zoontek/react-native-bootsplash)** - splash screen nativa.
