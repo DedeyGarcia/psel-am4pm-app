@@ -7,7 +7,7 @@ import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 import LoginScreen from '../screens/auth/login/LoginScreen';
 import SignUpScreen from '../screens/auth/signup/SignUpScreen';
-import RecipesList from '../screens/recipes/list/RecipesList';
+import HomeScreen from '../screens/recipes/home/RecipesList';
 import { AppHeader } from './AppHeader';
 import RecipeDetails from '../screens/recipes/details/RecipeDetails';
 import { RecipeCreate } from '../screens/recipes/create/RecipeCreate';
@@ -50,7 +50,7 @@ export function RootNavigator() {
           >
             <RootStack.Screen
               name="Recipes"
-              component={RecipesList}
+              component={HomeScreen}
               options={{ title: 'Minhas Receitas' }}
             />
             <RootStack.Screen
