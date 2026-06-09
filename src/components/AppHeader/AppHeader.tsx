@@ -6,7 +6,7 @@ import { queryClient } from '../../lib/queryClient';
 import { useAppTheme } from '../../theme';
 import { makeStyles } from './styles';
 
-export function AppHeader({
+export default function AppHeader({
   navigation,
   route,
   options,

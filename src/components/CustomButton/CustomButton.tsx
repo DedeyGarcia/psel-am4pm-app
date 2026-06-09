@@ -8,5 +8,5 @@ type CustomButtonProps = ButtonProps & {
 
 export default function CustomButton(props: CustomButtonProps) {
   const styles = makeStyles(props.fullWidth);
-  return <Button style={{ ...props.style, ...styles.root }} {...props} />;
+  return <Button {...props} style={{ ...props.style, ...styles.root }} />;
 }

@@ -24,13 +24,13 @@ export default function RecipeCard({ item }: { item: Recipe }) {
           <Text variant="titleMedium">{item.name}</Text>
         </View>
         <View style={styles.textWithIcon}>
-          <Icon source="clock-outline" size={16} />
+          <Icon source="clock-outline" size={theme.spacing.md} />
           <Text variant="labelMedium">
             Tempo: {item.preparationTimeMinutes} min.
           </Text>
         </View>
         <View style={styles.textWithIcon}>
-          <Icon source="food-turkey" size={16} />
+          <Icon source="food-turkey" size={theme.spacing.md} />
           <Text variant="labelMedium">Rendimento: {item.servings} porções</Text>
         </View>
         <View style={styles.ingredientsRow}>

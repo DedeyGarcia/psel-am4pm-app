@@ -7,13 +7,13 @@ import { useAuthStore } from '../store/authStore';
 import type { RootStackParamList } from './types';
 import LoginScreen from '../screens/auth/login/LoginScreen';
 import SignUpScreen from '../screens/auth/signup/SignUpScreen';
-import HomeScreen from '../screens/recipes/home/RecipesList';
-import { AppHeader } from '../components/AppHeader/AppHeader';
+import HomeScreen from '../screens/recipes/home/HomeScreen';
 import RecipeDetails from '../screens/recipes/details/RecipeDetails';
-import { RecipeCreate } from '../screens/recipes/create/RecipeCreate';
 import RecipeEdit from '../screens/recipes/edit/RecipeEdit';
 import { AuthenticatedScreensLayout } from './layouts/authenticated/AuthenticatedScreensLayout';
 import { PublicScreensLayout } from './layouts/public/PublicScreensLayout';
+import AppHeader from '../components/AppHeader/AppHeader';
+import RecipeCreate from '../screens/recipes/create/RecipeCreate';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -23,7 +23,7 @@ declare module '@react-navigation/core' {
   interface RootNavigator extends RootStackType {}
 }
 
-export function RootNavigator() {
+export default function RootNavigator() {
   const token = useAuthStore(state => state.token);
   const hasHydrated = useAuthStore(state => state.hasHydrated);
 

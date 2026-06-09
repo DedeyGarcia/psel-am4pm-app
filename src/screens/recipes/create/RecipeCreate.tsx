@@ -8,11 +8,11 @@ import { ActivityIndicator, Text } from 'react-native-paper';
 import { useAppTheme } from '../../../theme';
 import { makeStyles } from './styles';
 
-export function RecipeCreate() {
+export default function RecipeCreate() {
   const { mutate, isPending, error } = useCreateRecipe();
   const theme = useAppTheme();
   const styles = makeStyles(theme);
-  const navigate = useNavigation();
+  const navigation = useNavigation();
 
   const {
     data: categories,
@@ -23,7 +23,7 @@ export function RecipeCreate() {
   const onSubmit = (data: CreateRecipe) => {
     mutate(data, {
       onSuccess: () => {
-        navigate.goBack();
+        navigation.goBack();
       },
     });
   };

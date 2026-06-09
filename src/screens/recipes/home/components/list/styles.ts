@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
-import { AppTheme, theme } from '../../../../../theme';
+import { AppTheme } from '../../../../../theme';
 
-export const makeStyles = (_theme: AppTheme) =>
+export const makeStyles = (theme: AppTheme) =>
   StyleSheet.create({
     separator: {
       height: theme.spacing.md,

@@ -6,7 +6,6 @@ import { useAppTheme } from '../../../theme';
 import { makeStyles } from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { useCategories } from '../../../hooks/useCategory';
-import { useMemo } from 'react';
 import RecipesList from './components/list/RecipesList';
 import RecipesListFilters from './components/filters/RecipesListFilters';
 import { useRecipeFiltersStore } from '../../../store/recipeFiltersStore';
@@ -24,7 +23,7 @@ export default function HomeScreen() {
     navigation.navigate('RecipeCreate');
   };
 
-  const filteredRecipes = useMemo(() => {
+  const getFilteredRecipes = () => {
     let filtered: Recipe[] = [];
     if (!recipes) {
       return filtered;
@@ -45,7 +44,7 @@ export default function HomeScreen() {
     }
 
     return filtered;
-  }, [selectedCategories, searchQuery, recipes]);
+  };
 
   if (isPending || isCategoriesPending) {
     return (
@@ -66,7 +65,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.root}>
       <RecipesListFilters />
-      <RecipesList filteredRecipes={filteredRecipes} />
+      <RecipesList filteredRecipes={getFilteredRecipes()} />
       <FAB style={styles.fab} icon="plus" onPress={onFabPress} />
     </View>
   );

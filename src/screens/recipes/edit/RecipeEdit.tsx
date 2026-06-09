@@ -35,14 +35,14 @@ export default function RecipeEdit({ route }: { route: RecipeEditRouteProp }) {
     isPending: isPendingEditRecipe,
     error: errorEditRecipe,
   } = useEditRecipe();
-  const navigate = useNavigation();
+  const navigation = useNavigation();
 
   const onSubmit = (data: UpdateRecipe) => {
     mutate(
       { id: route.params.id, recipe: data },
       {
         onSuccess: () => {
-          navigate.goBack();
+          navigation.goBack();
         },
       },
     );
