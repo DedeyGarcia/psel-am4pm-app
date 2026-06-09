@@ -65,6 +65,7 @@ export default function RecipeForm({
   return (
     <View style={styles.root}>
       <KeyboardAwareScrollView
+        style={styles.scrollView}
         contentContainerStyle={styles.container}
         bottomOffset={90}
       >

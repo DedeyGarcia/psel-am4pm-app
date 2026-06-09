@@ -6,17 +6,19 @@ export const makeStyles = (theme: AppTheme) =>
     root: {
       flex: 1,
     },
+    scrollView: {
+      flex: 1,
+    },
     container: {
       flexGrow: 1,
-      gap: theme.spacing.sm,
+      gap: theme.spacing.md,
     },
     buttonContainer: {
-      flex: 1,
       backgroundColor: theme.colors.background,
       paddingVertical: theme.spacing.sm,
     },
     button: {
-      flex: 1,
+      alignSelf: 'stretch',
     },
     textAreaInput: {
       minHeight: 120,
