@@ -5,7 +5,8 @@ export const makeStyles = (theme: AppTheme) =>
   StyleSheet.create({
     root: {
       flex: 1,
-      padding: theme.spacing.md,
+      paddingVertical: theme.spacing.sm,
+      paddingHorizontal: theme.spacing.md,
       backgroundColor: theme.colors.background,
     },
   });

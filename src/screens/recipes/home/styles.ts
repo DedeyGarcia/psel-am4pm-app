@@ -5,7 +5,7 @@ export const makeStyles = (theme: AppTheme) =>
   StyleSheet.create({
     root: {
       flex: 1,
-      gap: theme.spacing.md,
+      gap: theme.spacing.sm,
     },
     loadingOrErrorContainer: {
       flex: 1,

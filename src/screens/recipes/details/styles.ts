@@ -14,10 +14,10 @@ export const makeStyles = (theme: AppTheme) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-    fab: {
-      position: 'absolute',
-      right: 0,
-      bottom: 0,
+    titleRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     subTitleRow: {
       flexDirection: 'row',

@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useLogin } from '../../../hooks/useLogin';
 import { LoginFormData, loginSchema } from './schema';
 import { getErrorMessage } from '../../../lib/getErrorMessage';
-import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -38,7 +38,10 @@ export default function LoginScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.container}
+      bottomOffset={100}
+    >
       <Text variant="titleLarge">Seu Livro de Receitas</Text>
       <Icon source="food-turkey" size={theme.spacing.xl} />
       <Controller
@@ -95,6 +98,6 @@ export default function LoginScreen() {
       >
         Criar Conta
       </CustomButton>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 }

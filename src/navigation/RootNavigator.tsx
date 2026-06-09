@@ -6,7 +6,7 @@ import type { RootStackParamList } from './types';
 import LoginScreen from '../screens/auth/login/LoginScreen';
 import SignUpScreen from '../screens/auth/signup/SignUpScreen';
 import HomeScreen from '../screens/recipes/home/RecipesList';
-import { AppHeader } from './AppHeader';
+import { AppHeader } from '../components/AppHeader/AppHeader';
 import RecipeDetails from '../screens/recipes/details/RecipeDetails';
 import { RecipeCreate } from '../screens/recipes/create/RecipeCreate';
 import RecipeEdit from '../screens/recipes/edit/RecipeEdit';

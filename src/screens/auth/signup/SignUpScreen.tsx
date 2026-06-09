@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSignUp } from '../../../hooks/useSignUp';
 import { CreateAccountFormData, createAccountSchema } from './schema';
 import { getErrorMessage } from '../../../lib/getErrorMessage';
-import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
@@ -44,7 +44,10 @@ export default function SignUpScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAwareScrollView
+      contentContainerStyle={styles.container}
+      bottomOffset={100}
+    >
       <Text variant="titleLarge">Seu Livro de Receitas</Text>
       <Icon source="food-turkey" size={theme.spacing.xl} />
       <Controller
@@ -117,6 +120,6 @@ export default function SignUpScreen() {
       >
         Entrar
       </CustomButton>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 }

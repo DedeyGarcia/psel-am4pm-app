@@ -1,5 +1,12 @@
 import { ScrollView, View } from 'react-native';
-import { ActivityIndicator, FAB, Icon, Menu, Text } from 'react-native-paper';
+import {
+  ActivityIndicator,
+  Card,
+  Icon,
+  IconButton,
+  Menu,
+  Text,
+} from 'react-native-paper';
 import { useRecipe } from '../../../hooks/recipe/useRecipe';
 import type { RootStackParamList } from '../../../navigation/types';
 import type { RouteProp } from '@react-navigation/native';
@@ -65,7 +72,34 @@ export default function RecipeDetails({
   return (
     <View style={styles.root}>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <Text variant="titleLarge">{data?.name}</Text>
+        <View style={styles.titleRow}>
+          <Text variant="titleLarge">{data?.name}</Text>
+          <Menu
+            visible={visible}
+            onDismiss={closeMenu}
+            anchor={
+              <IconButton
+                mode="outlined"
+                icon="dots-horizontal"
+                onPress={openMenu}
+                disabled={isPendingDelete}
+                loading={isPendingDelete}
+                size={theme.spacing.md}
+              />
+            }
+          >
+            <Menu.Item
+              onPress={onEditPress}
+              title="Editar"
+              trailingIcon={'pencil'}
+            />
+            <Menu.Item
+              onPress={onDeletePress}
+              title="Deletar"
+              trailingIcon={'delete'}
+            />
+          </Menu>
+        </View>
         <Text variant="labelMedium">Categoria: {recipeCategory?.name}</Text>
         <View style={styles.subTitleRow}>
           <View style={styles.textWithIcon}>
@@ -82,36 +116,19 @@ export default function RecipeDetails({
           </View>
         </View>
         <Text variant="titleMedium">Ingredientes:</Text>
-        <Text variant="bodyMedium">{data?.ingredients}</Text>
+        <Card mode="outlined">
+          <Card.Content>
+            <Text variant="bodyMedium">{data?.ingredients}</Text>
+          </Card.Content>
+        </Card>
 
         <Text variant="titleMedium">Modo de Preparo:</Text>
-        <Text variant="bodyMedium">{data?.directions}</Text>
+        <Card mode="outlined">
+          <Card.Content>
+            <Text variant="bodyMedium">{data?.directions}</Text>
+          </Card.Content>
+        </Card>
       </ScrollView>
-      <View style={styles.fab}>
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={
-            <FAB
-              icon="dots-vertical"
-              onPress={openMenu}
-              disabled={isPendingDelete}
-              loading={isPendingDelete}
-            />
-          }
-        >
-          <Menu.Item
-            onPress={onEditPress}
-            title="Editar"
-            trailingIcon={'pencil'}
-          />
-          <Menu.Item
-            onPress={onDeletePress}
-            title="Deletar"
-            trailingIcon={'delete'}
-          />
-        </Menu>
-      </View>
     </View>
   );
 }
