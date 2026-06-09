@@ -25,7 +25,7 @@ export function AppHeader({
   };
 
   return (
-    <Appbar.Header style={styles.root}>
+    <Appbar.Header style={styles.root} statusBarHeight={0}>
       {back ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
       <Appbar.Content title={title} />
       <Appbar.Action icon="logout" onPress={handleSignOut} />
