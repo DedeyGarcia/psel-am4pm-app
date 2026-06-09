@@ -9,7 +9,7 @@ export default function RecipesListEmptyComponent() {
 
   return (
     <View style={styles.emptyContainer}>
-      <Text variant="titleLarge">Nenhuma receita encontrada.</Text>
+      <Text variant="titleMedium">Nenhuma receita encontrada.</Text>
       <Text variant="bodyMedium">
         Toque no botão + para adicionar uma receita.
       </Text>
