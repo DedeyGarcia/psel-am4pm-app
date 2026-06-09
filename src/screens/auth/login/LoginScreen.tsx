@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Text } from 'react-native-paper';
+import { Icon, Text } from 'react-native-paper';
 import { makeStyles } from './styles';
 import { useAppTheme } from '../../../theme';
 import CustomTextInput from '../../../components/CustomTextInput/CustomTextInput';
@@ -39,7 +39,8 @@ export default function LoginScreen() {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <Text variant="titleLarge">Receitas App</Text>
+      <Text variant="titleLarge">Seu Livro de Receitas</Text>
+      <Icon source="food-turkey" size={theme.spacing.xl} />
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (

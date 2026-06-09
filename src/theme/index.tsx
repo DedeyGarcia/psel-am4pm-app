@@ -1,6 +1,35 @@
-import { MD3LightTheme, MD3Theme, useTheme } from 'react-native-paper';
+import {
+  MD3LightTheme,
+  MD3Theme,
+  configureFonts,
+  useTheme,
+} from 'react-native-paper';
 
 const spacing = { xs: 4, sm: 8, md: 16, lg: 24, xl: 32 } as const;
+
+const regular = { fontFamily: 'Montserrat-Regular', fontWeight: '400' } as const;
+const medium = { fontFamily: 'Montserrat-Medium', fontWeight: '400' } as const;
+const bold = { fontFamily: 'Montserrat-Bold', fontWeight: '400' } as const;
+
+const fonts = configureFonts({
+  config: {
+    displayLarge: bold,
+    displayMedium: bold,
+    displaySmall: bold,
+    headlineLarge: bold,
+    headlineMedium: medium,
+    headlineSmall: medium,
+    titleLarge: medium,
+    titleMedium: medium,
+    titleSmall: medium,
+    labelLarge: medium,
+    labelMedium: medium,
+    labelSmall: medium,
+    bodyLarge: regular,
+    bodyMedium: regular,
+    bodySmall: regular,
+  },
+});
 
 export const theme = {
   ...MD3LightTheme,
@@ -36,6 +65,7 @@ export const theme = {
     inverseOnSurface: '#FFEDE8',
     inversePrimary: '#FFB5A0',
   },
+  fonts,
   spacing,
 } satisfies MD3Theme & { spacing: typeof spacing };
 

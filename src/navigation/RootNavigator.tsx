@@ -3,8 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthStore } from '../store/authStore';
 import type { RootStackParamList } from './types';
-import { View } from 'react-native';
-import { Text } from 'react-native-paper';
 import LoginScreen from '../screens/auth/login/LoginScreen';
 import SignUpScreen from '../screens/auth/signup/SignUpScreen';
 import HomeScreen from '../screens/recipes/home/RecipesList';
@@ -14,6 +12,7 @@ import { RecipeCreate } from '../screens/recipes/create/RecipeCreate';
 import RecipeEdit from '../screens/recipes/edit/RecipeEdit';
 import { AuthenticatedScreensLayout } from './layouts/authenticated/AuthenticatedScreensLayout';
 import { PublicScreensLayout } from './layouts/public/PublicScreensLayout';
+import SplashScreen from '../screens/splash/SplashScreen';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -27,13 +26,8 @@ export function RootNavigator() {
   const token = useAuthStore(state => state.token);
   const hasHydrated = useAuthStore(state => state.hasHydrated);
 
-  // TODO: Add Splash Screen
   if (!hasHydrated) {
-    return (
-      <View>
-        <Text>Splash Screen</Text>
-      </View>
-    );
+    return <SplashScreen />;
   }
 
   return (

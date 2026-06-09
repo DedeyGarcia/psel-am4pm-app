@@ -6,14 +6,12 @@ export const makeStyles = (_theme: AppTheme) =>
     content: {
       gap: theme.spacing.sm,
     },
-    titleRow: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
     ingredientsRow: {
+      gap: theme.spacing.xs,
+    },
+    textWithIcon: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
+      gap: theme.spacing.xs,
     },
   });
