@@ -1,7 +1,3 @@
-jest.mock('@react-native-async-storage/async-storage', () =>
-  require('@react-native-async-storage/async-storage/jest'),
-);
-
 import { useAuthStore } from '../authStore';
 
 const initialState = useAuthStore.getState();
