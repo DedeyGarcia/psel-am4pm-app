@@ -1,19 +1,15 @@
 import type { Category } from '../../../../types/category';
 import { apiClient } from '../../../api/client';
-import { axiosResponse } from '../../../test-utils/axiosResponse';
+import { axiosResponse } from '../../../testUtils/axiosResponse';
+import {
+  buildCategory,
+  buildCategoryResponseDTO,
+} from '../../../testUtils/factories/category';
 import { categoryService } from '../categoryService';
-import type { CategoryResponseDTO } from '../types';
 
-jest.mock('../../../api/client', () => ({
-  apiClient: { get: jest.fn() },
-}));
+jest.mock('../../../api/client');
 
 const mockedApiClient = jest.mocked(apiClient);
-
-const categoriesResponse: CategoryResponseDTO[] = [
-  { id: 1, nome: 'Doces' },
-  { id: 2, nome: 'Salgados' },
-];
 
 describe('categoryService', () => {
   beforeEach(() => {
@@ -21,17 +17,20 @@ describe('categoryService', () => {
   });
 
   describe('getAll', () => {
-    it('should request the categories endpoint and map the response', async () => {
+    it('should call the categories endpoint with the correct payload', async () => {
       mockedApiClient.get.mockResolvedValue(
-        axiosResponse<CategoryResponseDTO[]>(categoriesResponse),
+        axiosResponse([
+          buildCategoryResponseDTO(),
+          buildCategoryResponseDTO({ id: 2, nome: 'Salgados' }),
+        ]),
       );
 
       const categories = await categoryService.getAll();
 
       expect(mockedApiClient.get).toHaveBeenCalledWith('/categorias');
       expect(categories).toEqual<Category[]>([
-        { id: 1, name: 'Doces' },
-        { id: 2, name: 'Salgados' },
+        buildCategory(),
+        buildCategory({ id: 2, name: 'Salgados' }),
       ]);
     });
   });

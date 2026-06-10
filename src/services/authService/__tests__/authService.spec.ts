@@ -1,28 +1,17 @@
 import type { Session } from '../../../../types/auth';
-import type { User } from '../../../../types/user';
 import { apiClient } from '../../../api/client';
-import { axiosResponse } from '../../../test-utils/axiosResponse';
+import { axiosResponse } from '../../../testUtils/axiosResponse';
+import {
+  buildLoginResponseDTO,
+  buildSignUpResponseDTO,
+  buildUser,
+} from '../../../testUtils/factories/auth';
 import { authService } from '../authService';
-import type {
-  LoginRequestDTO,
-  LoginResponseDTO,
-  SignUpRequestDTO,
-  SignUpResponseDTO,
-} from '../types';
+import type { LoginRequestDTO, SignUpRequestDTO } from '../types';
 
-jest.mock('../../../api/client', () => ({
-  apiClient: { post: jest.fn() },
-}));
+jest.mock('../../../api/client');
 
 const mockedApiClient = jest.mocked(apiClient);
-
-const signUpResponse: SignUpResponseDTO = {
-  id: 1,
-  nome: 'Fulano',
-  login: 'fulano',
-  criado_em: '2026-01-01',
-  alterado_em: '2026-01-02',
-};
 
 describe('authService', () => {
   beforeEach(() => {
@@ -30,9 +19,9 @@ describe('authService', () => {
   });
 
   describe('login', () => {
-    it('should post credentials to the login endpoint with the API field names', async () => {
+    it('should call the login endpoint with the correct payload', async () => {
       mockedApiClient.post.mockResolvedValue(
-        axiosResponse<LoginResponseDTO>({ access_token: 'token-123' }),
+        axiosResponse(buildLoginResponseDTO()),
       );
 
       await authService.login({ login: 'user', password: 'secret' });
@@ -45,7 +34,7 @@ describe('authService', () => {
 
     it('should return the session payload', async () => {
       mockedApiClient.post.mockResolvedValue(
-        axiosResponse<LoginResponseDTO>({ access_token: 'token-123' }),
+        axiosResponse(buildLoginResponseDTO()),
       );
 
       const session = await authService.login({
@@ -53,14 +42,14 @@ describe('authService', () => {
         password: 'secret',
       });
 
-      expect(session).toEqual<Session>({ access_token: 'token-123' });
+      expect(session).toEqual<Session>(buildLoginResponseDTO());
     });
   });
 
   describe('signUp', () => {
-    it('should post the account data with the API field names', async () => {
+    it('should call the create account endpoint with the correct payload', async () => {
       mockedApiClient.post.mockResolvedValue(
-        axiosResponse<SignUpResponseDTO>(signUpResponse),
+        axiosResponse(buildSignUpResponseDTO()),
       );
 
       await authService.signUp({
@@ -76,9 +65,9 @@ describe('authService', () => {
       } satisfies SignUpRequestDTO);
     });
 
-    it('should map the response DTO to a domain user', async () => {
+    it('should call the sign up endpoint and return the correct payload', async () => {
       mockedApiClient.post.mockResolvedValue(
-        axiosResponse<SignUpResponseDTO>(signUpResponse),
+        axiosResponse(buildSignUpResponseDTO()),
       );
 
       const user = await authService.signUp({
@@ -87,13 +76,7 @@ describe('authService', () => {
         password: 'secret',
       });
 
-      expect(user).toEqual<User>({
-        id: 1,
-        name: 'Fulano',
-        login: 'fulano',
-        createdAt: '2026-01-01',
-        updatedAt: '2026-01-02',
-      });
+      expect(user).toEqual(buildUser());
     });
   });
 });

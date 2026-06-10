@@ -1,63 +1,17 @@
-import type { CreateRecipe, Recipe } from '../../../../types/recipe';
+import type { Recipe } from '../../../../types/recipe';
 import { apiClient } from '../../../api/client';
-import { axiosResponse } from '../../../test-utils/axiosResponse';
+import { axiosResponse } from '../../../testUtils/axiosResponse';
+import {
+  buildCreateRecipe,
+  buildCreateRecipeRequestDTO,
+  buildRecipe,
+  buildRecipeResponseDTO,
+} from '../../../testUtils/factories/recipe';
 import { recipeService } from '../recipeService';
-import type { CreateRecipeRequestDTO, RecipeResponseDTO } from '../types';
 
-jest.mock('../../../api/client', () => ({
-  apiClient: {
-    get: jest.fn(),
-    post: jest.fn(),
-    patch: jest.fn(),
-    delete: jest.fn(),
-  },
-}));
+jest.mock('../../../api/client');
 
 const mockedApiClient = jest.mocked(apiClient);
-
-const recipeResponse: RecipeResponseDTO = {
-  id: 10,
-  id_categorias: 2,
-  id_usuarios: 5,
-  nome: 'Bolo',
-  tempo_preparo_minutos: 45,
-  porcoes: 8,
-  modo_preparo: 'misture e asse',
-  ingredientes: 'farinha, ovos',
-  criado_em: '2026-01-01',
-  alterado_em: '2026-01-02',
-};
-
-const expectedRecipe: Recipe = {
-  id: 10,
-  categoryId: 2,
-  userId: 5,
-  name: 'Bolo',
-  preparationTimeMinutes: 45,
-  servings: 8,
-  directions: 'misture e asse',
-  ingredients: 'farinha, ovos',
-  createdAt: '2026-01-01',
-  updatedAt: '2026-01-02',
-};
-
-const newRecipe: CreateRecipe = {
-  name: 'Bolo',
-  categoryId: 2,
-  preparationTimeMinutes: 45,
-  servings: 8,
-  directions: 'misture e asse',
-  ingredients: 'farinha, ovos',
-};
-
-const expectedRequestDTO: CreateRecipeRequestDTO = {
-  nome: 'Bolo',
-  id_categorias: 2,
-  tempo_preparo_minutos: 45,
-  porcoes: 8,
-  modo_preparo: 'misture e asse',
-  ingredientes: 'farinha, ovos',
-};
 
 describe('recipeService', () => {
   beforeEach(() => {
@@ -65,73 +19,73 @@ describe('recipeService', () => {
   });
 
   describe('getUserRecipes', () => {
-    it('should request the recipes endpoint and map every item', async () => {
+    it('should call the recipes endpoint and return the correct payload', async () => {
       mockedApiClient.get.mockResolvedValue(
-        axiosResponse<RecipeResponseDTO[]>([recipeResponse]),
+        axiosResponse([buildRecipeResponseDTO()]),
       );
 
       const recipes = await recipeService.getUserRecipes();
 
       expect(mockedApiClient.get).toHaveBeenCalledWith('/receitas');
-      expect(recipes).toEqual<Recipe[]>([expectedRecipe]);
+      expect(recipes).toEqual<Recipe[]>([buildRecipe()]);
     });
   });
 
   describe('getById', () => {
-    it('should request a single recipe by id and map the response', async () => {
+    it('should call the recipe by id endpoint and return the correct payload', async () => {
       mockedApiClient.get.mockResolvedValue(
-        axiosResponse<RecipeResponseDTO>(recipeResponse),
+        axiosResponse(buildRecipeResponseDTO()),
       );
 
       const recipe = await recipeService.getById('10');
 
       expect(mockedApiClient.get).toHaveBeenCalledWith('/receitas/10');
-      expect(recipe).toEqual<Recipe>(expectedRecipe);
+      expect(recipe).toEqual<Recipe>(buildRecipe());
     });
   });
 
   describe('create', () => {
-    it('should post the mapped request DTO and map the response back', async () => {
+    it('should call the create recipe endpoint with the correct payload', async () => {
       mockedApiClient.post.mockResolvedValue(
-        axiosResponse<RecipeResponseDTO>(recipeResponse),
+        axiosResponse(buildRecipeResponseDTO()),
       );
 
-      const recipe = await recipeService.create(newRecipe);
+      const recipe = await recipeService.create(buildCreateRecipe());
 
       expect(mockedApiClient.post).toHaveBeenCalledWith(
         '/receitas',
-        expectedRequestDTO,
+        buildCreateRecipeRequestDTO(),
       );
-      expect(recipe).toEqual<Recipe>(expectedRecipe);
+      expect(recipe).toEqual<Recipe>(buildRecipe());
     });
   });
 
   describe('update', () => {
-    it('should patch the recipe by id with the mapped request DTO', async () => {
+    it('should call the recipe patch endpoint with the correct payload', async () => {
       mockedApiClient.patch.mockResolvedValue(
-        axiosResponse<RecipeResponseDTO>(recipeResponse),
+        axiosResponse(buildRecipeResponseDTO()),
       );
 
-      const recipe = await recipeService.update('10', newRecipe);
+      const recipe = await recipeService.update('10', buildCreateRecipe());
 
       expect(mockedApiClient.patch).toHaveBeenCalledWith(
         '/receitas/10',
-        expectedRequestDTO,
+        buildCreateRecipeRequestDTO(),
       );
-      expect(recipe).toEqual<Recipe>(expectedRecipe);
+      expect(recipe).toEqual<Recipe>(buildRecipe());
     });
   });
 
   describe('delete', () => {
-    it('should delete the recipe by id and map the response', async () => {
+    it('should call the delete recipe endpoint and return the correct payload', async () => {
       mockedApiClient.delete.mockResolvedValue(
-        axiosResponse<RecipeResponseDTO>(recipeResponse),
+        axiosResponse(buildRecipeResponseDTO()),
       );
 
       const recipe = await recipeService.delete('10');
 
       expect(mockedApiClient.delete).toHaveBeenCalledWith('/receitas/10');
-      expect(recipe).toEqual<Recipe>(expectedRecipe);
+      expect(recipe).toEqual<Recipe>(buildRecipe());
     });
   });
 });
