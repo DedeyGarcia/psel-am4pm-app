@@ -21,7 +21,7 @@ import { Option } from 'react-native-paper-dropdown';
 import CustomDropdown from '../CustomDropdown/CustomDropdown';
 import CustomKeyboardGestureArea from '../CustomKeyboardGestureArea/CustomKeyboardGestureArea';
 
-type RecipeFormProps = {
+export type RecipeFormProps = {
   initialValues?: Partial<RecipeFormDataInput>;
   onSubmit: (data: RecipeFormDataOutput) => void;
   isPending?: boolean;
