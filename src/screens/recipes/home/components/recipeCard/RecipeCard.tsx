@@ -15,7 +15,7 @@ export default function RecipeCard({ item }: { item: Recipe }) {
     navigation.navigate('RecipeDetails', { id: item.id.toString() });
   };
 
-  const ingredientsPreview = item.ingredients.replaceAll('\n', '');
+  const ingredientsPreview = item.ingredients.replaceAll('\n', ' ');
 
   return (
     <Card mode="outlined">
