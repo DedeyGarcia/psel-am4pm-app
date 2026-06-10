@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import { useRecipes } from '../../../hooks/recipe/useRecipes';
 import { Recipe } from '../../../../types/recipe';
-import { ActivityIndicator, FAB, Text } from 'react-native-paper';
+import { ActivityIndicator, FAB, ProgressBar, Text } from 'react-native-paper';
 import { useAppTheme } from '../../../theme';
 import { makeStyles } from './styles';
 import { useNavigation } from '@react-navigation/native';
@@ -11,7 +11,7 @@ import RecipesListFilters from './components/filters/RecipesListFilters';
 import { useRecipeFiltersStore } from '../../../store/recipeFiltersStore';
 
 export default function HomeScreen() {
-  const { data: recipes, isPending, error } = useRecipes();
+  const { data: recipes, isPending, isFetching, error } = useRecipes();
   const { isPending: isCategoriesPending } = useCategories();
   const theme = useAppTheme();
   const styles = makeStyles(theme);
@@ -65,6 +65,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.root}>
       <RecipesListFilters />
+      <ProgressBar indeterminate visible={isFetching} />
       <RecipesList filteredRecipes={getFilteredRecipes()} />
       <FAB style={styles.fab} icon="plus" onPress={onFabPress} />
     </View>

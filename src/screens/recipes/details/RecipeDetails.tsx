@@ -5,6 +5,7 @@ import {
   Icon,
   IconButton,
   Menu,
+  ProgressBar,
   Text,
 } from 'react-native-paper';
 import { useRecipe } from '../../../hooks/recipe/useRecipe';
@@ -29,7 +30,7 @@ export default function RecipeDetails({
 
   const closeMenu = () => setVisible(false);
 
-  const { data, isPending, error } = useRecipe(route.params.id);
+  const { data, isPending, isFetching, error } = useRecipe(route.params.id);
   const { mutate, isPending: isPendingDelete } = useDeleteRecipe();
   const { data: categories } = useCategories();
 
@@ -71,6 +72,7 @@ export default function RecipeDetails({
 
   return (
     <View style={styles.root}>
+      <ProgressBar indeterminate visible={isFetching} />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.titleRow}>
           <Text variant="titleLarge">{data?.name}</Text>
