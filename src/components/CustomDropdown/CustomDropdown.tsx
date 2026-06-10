@@ -4,6 +4,7 @@ import {
   DropdownInputProps,
 } from 'react-native-paper-dropdown';
 import CustomTextInput from '../CustomTextInput/CustomTextInput';
+import { useAppTheme } from '../../theme';
 
 type CustomDropdownInputProps = DropdownInputProps & {
   errorMessage?: string;
@@ -34,9 +35,11 @@ export default function CustomDropdown({
   errorMessage,
   ...props
 }: CustomDropdownProps) {
+  const theme = useAppTheme();
   return (
     <Dropdown
       {...props}
+      menuContentStyle={{ backgroundColor: theme.colors.background }}
       // eslint-disable-next-line react/no-unstable-nested-components
       CustomDropdownInput={inputProps => (
         <DropdownInput {...inputProps} errorMessage={errorMessage} />

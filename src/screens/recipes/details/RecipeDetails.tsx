@@ -89,6 +89,7 @@ export default function RecipeDetails({
                 size={theme.spacing.md}
               />
             }
+            contentStyle={{ backgroundColor: theme.colors.background }}
           >
             <Menu.Item
               onPress={onEditPress}
