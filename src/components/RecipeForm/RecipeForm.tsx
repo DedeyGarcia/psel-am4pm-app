@@ -19,6 +19,7 @@ import {
 import { Category } from '../../../types/category';
 import { Option } from 'react-native-paper-dropdown';
 import CustomDropdown from '../CustomDropdown/CustomDropdown';
+import CustomKeyboardGestureArea from '../CustomKeyboardGestureArea/CustomKeyboardGestureArea';
 
 type RecipeFormProps = {
   initialValues?: Partial<RecipeFormDataInput>;
@@ -64,117 +65,119 @@ export default function RecipeForm({
 
   return (
     <View style={styles.root}>
-      <KeyboardAwareScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.container}
-        bottomOffset={90}
-      >
-        <Text variant="titleLarge">{submitLabel} Receita</Text>
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <CustomTextInput
-              label="Nome"
-              placeholder="Digite o nome da receita"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              error={!!errors.name}
-              errorMessage={errors.name?.message}
-            />
-          )}
-          name="name"
-        />
-        <Controller
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <CustomDropdown
-              label="Categoria"
-              placeholder="Selecione a categoria"
-              mode="outlined"
-              options={categoriesAsOptions}
-              value={value}
-              onSelect={onChange}
-              error={!!errors.categoryId}
-              errorMessage={errors.categoryId?.message}
-            />
-          )}
-          name="categoryId"
-        />
+      <CustomKeyboardGestureArea>
+        <KeyboardAwareScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.container}
+          bottomOffset={90}
+        >
+          <Text variant="titleLarge">{submitLabel} Receita</Text>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <CustomTextInput
+                label="Nome"
+                placeholder="Digite o nome da receita"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={!!errors.name}
+                errorMessage={errors.name?.message}
+              />
+            )}
+            name="name"
+          />
+          <Controller
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <CustomDropdown
+                label="Categoria"
+                placeholder="Selecione a categoria"
+                mode="outlined"
+                options={categoriesAsOptions}
+                value={value}
+                onSelect={onChange}
+                error={!!errors.categoryId}
+                errorMessage={errors.categoryId?.message}
+              />
+            )}
+            name="categoryId"
+          />
 
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <CustomTextInput
-              label="Tempo de preparo (minutos)"
-              placeholder="Digite o tempo de preparo em minutos"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              error={!!errors.preparationTimeMinutes}
-              errorMessage={errors.preparationTimeMinutes?.message}
-              inputMode="numeric"
-            />
-          )}
-          name="preparationTimeMinutes"
-        />
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <CustomTextInput
-              label="Porções"
-              placeholder="Digite a quantidade de porções"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              error={!!errors.servings}
-              errorMessage={errors.servings?.message}
-              inputMode="numeric"
-            />
-          )}
-          name="servings"
-        />
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <CustomTextInput
-              label="Ingredientes"
-              placeholder="Digite os ingredientes"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              error={!!errors.ingredients}
-              errorMessage={errors.ingredients?.message}
-              multiline
-              style={styles.textAreaInput}
-            />
-          )}
-          name="ingredients"
-        />
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <CustomTextInput
+                label="Tempo de preparo (minutos)"
+                placeholder="Digite o tempo de preparo em minutos"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={!!errors.preparationTimeMinutes}
+                errorMessage={errors.preparationTimeMinutes?.message}
+                inputMode="numeric"
+              />
+            )}
+            name="preparationTimeMinutes"
+          />
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <CustomTextInput
+                label="Porções"
+                placeholder="Digite a quantidade de porções"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={!!errors.servings}
+                errorMessage={errors.servings?.message}
+                inputMode="numeric"
+              />
+            )}
+            name="servings"
+          />
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <CustomTextInput
+                label="Ingredientes"
+                placeholder="Digite os ingredientes"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={!!errors.ingredients}
+                errorMessage={errors.ingredients?.message}
+                multiline
+                style={styles.textAreaInput}
+              />
+            )}
+            name="ingredients"
+          />
 
-        <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <CustomTextInput
-              label="Modo de preparo"
-              placeholder="Digite o modo de preparo"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              error={!!errors.directions}
-              errorMessage={errors.directions?.message}
-              multiline
-              style={styles.textAreaInput}
-            />
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <CustomTextInput
+                label="Modo de preparo"
+                placeholder="Digite o modo de preparo"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={!!errors.directions}
+                errorMessage={errors.directions?.message}
+                multiline
+                style={styles.textAreaInput}
+              />
+            )}
+            name="directions"
+          />
+          {error && (
+            <Text style={{ color: theme.colors.error }}>
+              {getErrorMessage(error)}
+            </Text>
           )}
-          name="directions"
-        />
-        {error && (
-          <Text style={{ color: theme.colors.error }}>
-            {getErrorMessage(error)}
-          </Text>
-        )}
-      </KeyboardAwareScrollView>
+        </KeyboardAwareScrollView>
+      </CustomKeyboardGestureArea>
       <KeyboardStickyView
         style={styles.buttonContainer}
         offset={{ closed: 0, opened: 16 }}

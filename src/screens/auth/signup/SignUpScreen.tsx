@@ -11,6 +11,7 @@ import { CreateAccountFormData, createAccountSchema } from './schema';
 import { getErrorMessage } from '../../../lib/getErrorMessage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import PasswordInput from '../../../components/PasswordInput/PasswordInput';
+import CustomKeyboardGestureArea from '../../../components/CustomKeyboardGestureArea/CustomKeyboardGestureArea';
 
 export default function SignUpScreen() {
   const navigation = useNavigation();
@@ -45,83 +46,86 @@ export default function SignUpScreen() {
   };
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={styles.container}
-      bottomOffset={100}
-      keyboardShouldPersistTaps="handled"
-    >
-      <Text variant="titleLarge">Seu Livro de Receitas</Text>
-      <Icon source="food-turkey" size={theme.spacing.xl} />
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <CustomTextInput
-            label="Nome"
-            placeholder="Digite seu nome"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            error={!!errors.name}
-            errorMessage={errors.name?.message}
-          />
-        )}
-        name="name"
-      />
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <CustomTextInput
-            label="Login"
-            placeholder="Digite seu login"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            error={!!errors.login}
-            errorMessage={errors.login?.message}
-          />
-        )}
-        name="login"
-      />
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <PasswordInput
-            label="Senha"
-            placeholder="Digite sua senha"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            error={!!errors.password}
-            errorMessage={errors.password?.message}
-          />
-        )}
-        name="password"
-      />
-      <CustomButton
-        mode="contained"
-        fullWidth
-        onPress={handleSubmit(onSignUpPress)}
-        loading={isPending}
-        disabled={isPending}
+    <CustomKeyboardGestureArea>
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.container}
+        bottomOffset={100}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="interactive"
       >
-        Criar Conta
-      </CustomButton>
-      {error && (
-        <Text variant="bodySmall" style={{ color: theme.colors.error }}>
-          {getErrorMessage(error, {
-            409: 'Já existe uma conta com esse login.',
-          })}
-        </Text>
-      )}
+        <Text variant="titleLarge">Seu Livro de Receitas</Text>
+        <Icon source="food-turkey" size={theme.spacing.xl} />
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomTextInput
+              label="Nome"
+              placeholder="Digite seu nome"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              error={!!errors.name}
+              errorMessage={errors.name?.message}
+            />
+          )}
+          name="name"
+        />
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomTextInput
+              label="Login"
+              placeholder="Digite seu login"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              error={!!errors.login}
+              errorMessage={errors.login?.message}
+            />
+          )}
+          name="login"
+        />
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <PasswordInput
+              label="Senha"
+              placeholder="Digite sua senha"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              error={!!errors.password}
+              errorMessage={errors.password?.message}
+            />
+          )}
+          name="password"
+        />
+        <CustomButton
+          mode="contained"
+          fullWidth
+          onPress={handleSubmit(onSignUpPress)}
+          loading={isPending}
+          disabled={isPending}
+        >
+          Criar Conta
+        </CustomButton>
+        {error && (
+          <Text variant="bodySmall" style={{ color: theme.colors.error }}>
+            {getErrorMessage(error, {
+              409: 'Já existe uma conta com esse login.',
+            })}
+          </Text>
+        )}
 
-      <CustomButton
-        mode="outlined"
-        fullWidth
-        onPress={onLoginPress}
-        disabled={isPending}
-      >
-        Entrar
-      </CustomButton>
-    </KeyboardAwareScrollView>
+        <CustomButton
+          mode="outlined"
+          fullWidth
+          onPress={onLoginPress}
+          disabled={isPending}
+        >
+          Entrar
+        </CustomButton>
+      </KeyboardAwareScrollView>
+    </CustomKeyboardGestureArea>
   );
 }

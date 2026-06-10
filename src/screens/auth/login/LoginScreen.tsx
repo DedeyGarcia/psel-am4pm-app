@@ -11,6 +11,7 @@ import { LoginFormData, loginSchema } from './schema';
 import { getErrorMessage } from '../../../lib/getErrorMessage';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import PasswordInput from '../../../components/PasswordInput/PasswordInput';
+import CustomKeyboardGestureArea from '../../../components/CustomKeyboardGestureArea/CustomKeyboardGestureArea';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -39,66 +40,69 @@ export default function LoginScreen() {
   };
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={styles.container}
-      bottomOffset={100}
-      keyboardShouldPersistTaps="handled"
-    >
-      <Text variant="titleLarge">Seu Livro de Receitas</Text>
-      <Icon source="food-turkey" size={theme.spacing.xl} />
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <CustomTextInput
-            label="Login"
-            placeholder="Digite seu login"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            error={!!errors.login}
-            errorMessage={errors.login?.message}
-          />
-        )}
-        name="login"
-      />
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <PasswordInput
-            label="Senha"
-            placeholder="Digite sua senha"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            error={!!errors.password}
-            errorMessage={errors.password?.message}
-          />
-        )}
-        name="password"
-      />
-      <CustomButton
-        mode="contained"
-        fullWidth
-        onPress={handleSubmit(onLoginPress)}
-        loading={isPending}
-        disabled={isPending}
+    <CustomKeyboardGestureArea>
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.container}
+        bottomOffset={100}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="interactive"
       >
-        Entrar
-      </CustomButton>
-      {error && (
-        <Text style={{ color: theme.colors.error }}>
-          {getErrorMessage(error, { 401: 'Login ou senha inválidos.' })}
-        </Text>
-      )}
+        <Text variant="titleLarge">Seu Livro de Receitas</Text>
+        <Icon source="food-turkey" size={theme.spacing.xl} />
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <CustomTextInput
+              label="Login"
+              placeholder="Digite seu login"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              error={!!errors.login}
+              errorMessage={errors.login?.message}
+            />
+          )}
+          name="login"
+        />
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <PasswordInput
+              label="Senha"
+              placeholder="Digite sua senha"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              error={!!errors.password}
+              errorMessage={errors.password?.message}
+            />
+          )}
+          name="password"
+        />
+        <CustomButton
+          mode="contained"
+          fullWidth
+          onPress={handleSubmit(onLoginPress)}
+          loading={isPending}
+          disabled={isPending}
+        >
+          Entrar
+        </CustomButton>
+        {error && (
+          <Text style={{ color: theme.colors.error }}>
+            {getErrorMessage(error, { 401: 'Login ou senha inválidos.' })}
+          </Text>
+        )}
 
-      <CustomButton
-        mode="outlined"
-        fullWidth
-        onPress={onSignUpPress}
-        disabled={isPending}
-      >
-        Criar Conta
-      </CustomButton>
-    </KeyboardAwareScrollView>
+        <CustomButton
+          mode="outlined"
+          fullWidth
+          onPress={onSignUpPress}
+          disabled={isPending}
+        >
+          Criar Conta
+        </CustomButton>
+      </KeyboardAwareScrollView>
+    </CustomKeyboardGestureArea>
   );
 }
