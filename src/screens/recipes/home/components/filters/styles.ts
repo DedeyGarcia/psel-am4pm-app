@@ -14,5 +14,6 @@ export const makeStyles = (_theme: AppTheme) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      height: theme.spacing.xl,
     },
   });
