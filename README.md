@@ -112,8 +112,11 @@ src/
 ├── screens/      # Telas, agrupadas por domínio (auth, recipes)
 ├── services/     # Camada de serviço: chamadas à API + mapeamento DTO ↔ domínio
 ├── store/        # Estado global de UI/sessão com Zustand (authStore, filtros)
+├── testUtils/    # Helpers de teste (renderWithProviders, factories, wrappers de QueryClient)
 └── theme/        # Tema Material Design 3 (cores, fontes Montserrat, spacing)
 ```
+
+Os testes ficam ao lado do código que exercitam, em pastas `__tests__/` com sufixo `.spec.ts(x)`. Rode com `npm test`.
 
 Tipos de domínio compartilhados ficam em [`types/`](types/) na raiz.
 
@@ -127,3 +130,4 @@ Tipos de domínio compartilhados ficam em [`types/`](types/) na raiz.
 - **[React Navigation](https://reactnavigation.org/)** - navegação, com tipagem das rotas.
 - **[@shopify/flash-list](https://shopify.github.io/flash-list/)** - listas performáticas.
 - **[react-native-bootsplash](https://github.com/zoontek/react-native-bootsplash)** - splash screen nativa.
+- **[Jest](https://jestjs.io/) + [Testing Library (RNTL)](https://callstack.github.io/react-native-testing-library/)** - testes automatizados, com foco no comportamento visível ao usuário.
