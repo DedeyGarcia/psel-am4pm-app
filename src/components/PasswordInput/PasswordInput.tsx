@@ -2,7 +2,7 @@ import { useState } from 'react';
 import CustomTextInput from '../CustomTextInput/CustomTextInput';
 import { TextInput } from 'react-native-paper';
 
-type PasswordInputProps = {
+export type PasswordInputProps = {
   label: string;
   placeholder: string;
   onBlur: () => void;
