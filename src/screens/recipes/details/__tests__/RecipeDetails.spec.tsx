@@ -7,13 +7,19 @@ import { recipeService } from '../../../../services/recipeService/recipeService'
 import { categoryService } from '../../../../services/categoryService/categoryService';
 import { buildRecipe } from '../../../../testUtils/factories/recipe';
 import { buildCategory } from '../../../../testUtils/factories/category';
+import RNPrint from 'react-native-print';
 import RecipeDetails from '../RecipeDetails';
 
 jest.mock('../../../../services/recipeService/recipeService');
 jest.mock('../../../../services/categoryService/categoryService');
+jest.mock('react-native-print', () => ({
+  __esModule: true,
+  default: { print: jest.fn() },
+}));
 
 const mockedRecipeService = jest.mocked(recipeService);
 const mockedCategoryService = jest.mocked(categoryService);
+const mockedRNPrint = jest.mocked(RNPrint);
 const Stack = createTestStack();
 
 function RecipesPlaceholder() {
@@ -97,5 +103,18 @@ describe('RecipeDetails', () => {
 
     expect(await screen.findByText('Tela de edição')).toBeOnTheScreen();
     expect(mockedRecipeService.delete).not.toHaveBeenCalled();
+  });
+
+  it('should print the recipe when pressing print button', async () => {
+    const user = userEvent.setup();
+    await openDetails(user);
+
+    await user.press(screen.getByRole('button'));
+    await user.press(screen.getByText('Imprimir'));
+
+    await waitFor(() => expect(mockedRNPrint.print).toHaveBeenCalledTimes(1));
+    expect(mockedRNPrint.print).toHaveBeenCalledWith({
+      html: expect.stringContaining('Bolo de Cenoura'),
+    });
   });
 });

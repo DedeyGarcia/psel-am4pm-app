@@ -17,6 +17,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { useDeleteRecipe } from '../../../hooks/recipe/useDeleteRecipe';
 import { useCategories } from '../../../hooks/useCategory';
+import { usePrintRecipe } from '../../../hooks/usePrintRecipe';
 
 type RecipeDetailsRouteProp = RouteProp<RootStackParamList, 'RecipeDetails'>;
 
@@ -37,6 +38,7 @@ export default function RecipeDetails({
   const theme = useAppTheme();
   const styles = makeStyles(theme);
   const navigation = useNavigation();
+  const printRecipe = usePrintRecipe();
 
   const onEditPress = () => {
     navigation.navigate('RecipeEdit', { id: route.params.id });
@@ -53,6 +55,12 @@ export default function RecipeDetails({
   };
 
   const recipeCategory = categories?.find(c => c.id === data?.categoryId);
+
+  const onPrintPress = async () => {
+    closeMenu();
+    if (!data) return;
+    await printRecipe(data, recipeCategory);
+  };
 
   if (isPending) {
     return (
@@ -100,6 +108,11 @@ export default function RecipeDetails({
               onPress={onDeletePress}
               title="Deletar"
               trailingIcon={'delete'}
+            />
+            <Menu.Item
+              onPress={onPrintPress}
+              title="Imprimir"
+              trailingIcon={'printer'}
             />
           </Menu>
         </View>
