@@ -34,6 +34,10 @@ RECEIPES_API=https://sua-api.com
 API_KEY=sua-chave-aqui
 ```
 
+Você também pode rodar a API **localmente**, clonando o [repositório dela](https://github.com/DedeyGarcia/psel-am4pm-backend) e subindo na sua máquina. Nesse caso, aponte `RECEIPES_API` para o endereço local.
+
+> Sobre o `API_KEY`: só preencha se você configurou uma chave no `.env` da **própria API**. Se a API não exige chave, **não inclua** `API_KEY` no `.env`. Em **produção é obrigatório**.
+
 ---
 
 ## Rodando em desenvolvimento
@@ -58,6 +62,13 @@ npm run android
 
 - ⚠️ **Se o Metro perguntar se você quer abrir uma nova instância** (porque já há um Metro rodando no Terminal 1), escolha **Não / No**. Use o Metro que já está aberto.
 - ⚠️ **Se a build de desenvolvimento travar/congelar na splash screen:** é só **fechar o app e abrir de novo** no aparelho. É um comportamento conhecido dessa variante de debug e não afeta a build de release.
+- ⚠️ **Rodando a API localmente com o aparelho conectado via USB:** use `adb reverse` para o `localhost` do celular apontar para o do PC. Assim você mantém `RECEIPES_API=http://localhost:PORTA` no `.env`, sem precisar do IP da máquina nem estar na mesma rede:
+
+  ```sh
+  adb -d reverse tcp:PORTA tcp:PORTA
+  ```
+
+  Troque `PORTA` pela porta da API (ex: `8000`). O `-d` seleciona o dispositivo USB físico - útil quando há um emulador aberto e o `adb` reclama de *"more than one device"*. O redirecionamento cai ao desconectar o cabo; basta rodar o comando de novo.
 
 ---
 
