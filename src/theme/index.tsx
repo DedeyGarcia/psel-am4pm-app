@@ -6,8 +6,12 @@ import {
 } from 'react-native-paper';
 
 const spacing = { xs: 4, sm: 8, md: 16, lg: 24, xl: 32 } as const;
+const sizes = { headerHeight: 32 } as const;
 
-const regular = { fontFamily: 'Montserrat-Regular', fontWeight: '400' } as const;
+const regular = {
+  fontFamily: 'Montserrat-Regular',
+  fontWeight: '400',
+} as const;
 const medium = { fontFamily: 'Montserrat-Medium', fontWeight: '400' } as const;
 const bold = { fontFamily: 'Montserrat-Bold', fontWeight: '400' } as const;
 
@@ -67,7 +71,8 @@ export const theme = {
   },
   fonts,
   spacing,
-} satisfies MD3Theme & { spacing: typeof spacing };
+  sizes,
+} satisfies MD3Theme & { spacing: typeof spacing; sizes: typeof sizes };
 
 export type AppTheme = typeof theme;
 

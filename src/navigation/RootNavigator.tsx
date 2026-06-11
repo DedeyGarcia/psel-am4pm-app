@@ -13,6 +13,7 @@ import RecipeEdit from '../screens/recipes/edit/RecipeEdit';
 import { AuthenticatedScreensLayout } from './layouts/authenticated/AuthenticatedScreensLayout';
 import { PublicScreensLayout } from './layouts/public/PublicScreensLayout';
 import AppHeader from '../components/AppHeader/AppHeader';
+import RecipesHeader from '../components/RecipesHeader/RecipesHeader';
 import RecipeCreate from '../screens/recipes/create/RecipeCreate';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -52,7 +53,7 @@ export default function RootNavigator() {
             <RootStack.Screen
               name="Recipes"
               component={HomeScreen}
-              options={{ title: 'Minhas Receitas' }}
+              options={{ header: RecipesHeader }}
             />
             <RootStack.Screen
               name="RecipeDetails"

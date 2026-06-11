@@ -9,7 +9,8 @@ export const makeStyles = (theme: AppTheme, insets: EdgeInsets) =>
       borderBottomWidth: 1,
       borderBottomColor: theme.colors.outlineVariant,
     },
-    title: {
-      fontSize: 20,
+    titleContainer: {
+      flex: 1,
+      paddingHorizontal: theme.spacing.md,
     },
   });

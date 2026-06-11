@@ -9,8 +9,17 @@ import {
   LoginRequestDTO,
   SignUpRequestDTO,
   SignUpResponseDTO,
+  GetUserResponseDTO,
 } from './types';
 import { User } from '../../../types/user';
+
+const toUser = (dto: GetUserResponseDTO): User => ({
+  id: dto.id,
+  name: dto.nome,
+  login: dto.login,
+  createdAt: dto.criado_em,
+  updatedAt: dto.alterado_em,
+});
 
 export const authService = {
   login: async (credentials: LoginCredentials): Promise<Session> => {
@@ -27,12 +36,11 @@ export const authService = {
       login: credentials.login,
       senha: credentials.password,
     } satisfies SignUpRequestDTO);
-    return {
-      id: data.id,
-      name: data.nome,
-      login: data.login,
-      createdAt: data.criado_em,
-      updatedAt: data.alterado_em,
-    };
+    return toUser(data);
+  },
+
+  getMe: async (): Promise<User> => {
+    const { data } = await apiClient.get<GetUserResponseDTO>('/usuarios/me');
+    return toUser(data);
   },
 };

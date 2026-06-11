@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { authService } from '../services/authService/authService';
 import type { SignUpCredentials } from '../../types/auth';
 import { useAuthStore } from '../store/authStore';
@@ -11,25 +11,27 @@ export class AutoLoginError extends Error {
 }
 
 export function useSignUp() {
+  const queryClient = useQueryClient();
   const signIn = useAuthStore(store => store.signIn);
 
   return useMutation({
     mutationFn: async (credentials: SignUpCredentials) => {
-      await authService.signUp(credentials);
+      const user = await authService.signUp(credentials);
 
       try {
-        const data = await authService.login({
+        const session = await authService.login({
           login: credentials.login,
           password: credentials.password,
         });
 
-        return data;
+        return { user, session };
       } catch {
         throw new AutoLoginError();
       }
     },
-    onSuccess(data) {
-      signIn(data.access_token);
+    onSuccess({ user, session }) {
+      signIn(session.access_token);
+      queryClient.setQueryData(['user', 'me'], user);
     },
   });
 }

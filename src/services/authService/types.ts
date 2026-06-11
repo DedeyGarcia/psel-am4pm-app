@@ -20,3 +20,5 @@ export interface SignUpResponseDTO {
   criado_em: string;
   alterado_em: string;
 }
+
+export type GetUserResponseDTO = SignUpResponseDTO;

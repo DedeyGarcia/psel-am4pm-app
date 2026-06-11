@@ -69,6 +69,11 @@ npm run android
   ```
 
   Troque `PORTA` pela porta da API (ex: `8000`). O `-d` seleciona o dispositivo USB físico - útil quando há um emulador aberto e o `adb` reclama de *"more than one device"*. O redirecionamento cai ao desconectar o cabo; basta rodar o comando de novo.
+- ⚠️ **Ao mudar o `.env`, reinicie o Metro com `--reset-cache`** - o `react-native-dotenv` embute os valores no bundle em tempo de transpilação, e o cache de transform do Metro **não é invalidado** quando só o `.env` muda. Sem isso, o app continua usando o valor antigo (mesmo após `Reload`). Use o separador `--` para a flag chegar ao Metro:
+
+  ```sh
+  npm start -- --reset-cache
+  ```
 
 ---
 
