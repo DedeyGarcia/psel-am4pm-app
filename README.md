@@ -36,7 +36,7 @@ API_KEY=sua-chave-aqui
 
 Você também pode rodar a API **localmente**, clonando o [repositório dela](https://github.com/DedeyGarcia/psel-am4pm-backend) e subindo na sua máquina. Nesse caso, aponte `RECEIPES_API` para o endereço local.
 
-> Sobre o `API_KEY`: só preencha se você configurou uma chave no `.env` da **própria API**. Se a API não exige chave, **não inclua** `API_KEY` no `.env`. Em **produção é obrigatório**.
+> Sobre o `API_KEY`: só é obrigatória se você configurou uma chave no `.env` da **própria API**. Se a API não exige chave, **não é necessária** `API_KEY` no `.env` (apesar de ainda funcionar caso seja definida). Em **produção é obrigatório**.
 
 ---
 
