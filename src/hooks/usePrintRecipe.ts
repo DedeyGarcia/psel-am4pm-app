@@ -9,7 +9,7 @@ export const resolvePrintHtml = (
 ) => {
   return `
       <h1>${data?.name ?? ''}</h1>
-      <p><strong>Categoria:</strong> ${recipeCategory?.name ?? ''}</p>
+      <p><strong>Categoria:</strong> ${recipeCategory?.name ?? 'Outra'}</p>
       <p><strong>Tempo:</strong> ${
         data?.preparationTimeMinutes
       } min &nbsp;|&nbsp;
