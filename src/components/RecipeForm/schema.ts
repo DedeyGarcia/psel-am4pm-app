@@ -5,7 +5,7 @@ const numericField = (msg: string) =>
     .string()
     .min(1, 'Este campo é obrigatório.')
     .transform(Number)
-    .pipe(z.number().int(msg).positive(msg));
+    .pipe(z.number({ error: 'Informe apenas números.' }).int(msg).positive(msg));
 
 export const recipeSchema = z.object({
   name: z.string().min(1, 'Este campo é obrigatório.'),

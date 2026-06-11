@@ -46,6 +46,25 @@ describe('recipeSchema', () => {
     ).toBe(false);
   });
 
+  it.each([
+    ['letters', 'abc'],
+    ['mixed', '12a'],
+    ['symbols', '#@!'],
+  ])(
+    'should reject %s with a friendly numbers-only message',
+    (_label, value) => {
+      const result = recipeSchema.safeParse({
+        ...valid,
+        preparationTimeMinutes: value,
+      });
+
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error.issues[0].message).toBe('Informe apenas números.');
+      }
+    },
+  );
+
   it('should use the category-specific message for invalid category', () => {
     const result = recipeSchema.safeParse({ ...valid, categoryId: '0' });
 
