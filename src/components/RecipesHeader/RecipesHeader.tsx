@@ -16,7 +16,9 @@ export default function RecipesHeader(_: NativeStackHeaderProps) {
   return (
     <Appbar.Header style={styles.root} statusBarHeight={0}>
       <View style={styles.titleContainer}>
-        <Text variant="labelSmall">Olá {user?.name ?? ''}, aqui estão</Text>
+        {user?.name && (
+          <Text variant="labelSmall">Olá {user?.name}, aqui estão</Text>
+        )}
         <Text variant="titleLarge">Suas Receitas</Text>
       </View>
       <LogoutButton />
