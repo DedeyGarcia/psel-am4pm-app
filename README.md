@@ -89,9 +89,7 @@ Transfira esse arquivo para o celular e instale (talvez seja necessário permiti
 
 ## Baixar o APK pronto (Google Drive)
 
-Se preferir não buildar, baixe o APK já compilado:
-
-🔗 **Link do Google Drive:** [`https://drive.google.com/file/d/1EbKDTqbXULLwZeC98SH6FvvJQ0TdhI32/view?usp=drive_link`](https://drive.google.com/file/d/1EbKDTqbXULLwZeC98SH6FvvJQ0TdhI32/view?usp=drive_link)
+Se preferir não buildar, baixe o APK já compilado em: [`https://drive.google.com/drive/folders/1nOwWw5_Dh7L5ABRxYZJceMZ_0YuEMHMz?usp=drive_link`](https://drive.google.com/drive/folders/1nOwWw5_Dh7L5ABRxYZJceMZ_0YuEMHMz?usp=drive_link)
 
 No celular, após baixar, toque no arquivo `.apk` e permita a instalação de fontes desconhecidas se solicitado.
 
@@ -112,17 +110,17 @@ src/
 ├── screens/      # Telas, agrupadas por domínio (auth, recipes)
 ├── services/     # Camada de serviço: chamadas à API + mapeamento DTO ↔ domínio
 ├── store/        # Estado global de UI/sessão com Zustand (authStore, filtros)
-├── testUtils/    # Helpers de teste (renderWithProviders, factories, wrappers de QueryClient)
+├── testUtils/    # Helpers de teste (factories, wrappers, etc...)
 └── theme/        # Tema Material Design 3 (cores, fontes Montserrat, spacing)
 ```
 
-Os testes ficam ao lado do código que exercitam, em pastas `__tests__/` com sufixo `.spec.ts(x)`. Rode com `npm test`.
+Os testes ficam ao lado do código que lhes é referente, em pastas `__tests__/` com sufixo `.spec.ts(x)`. Rode com `npm test`.
 
 Tipos de domínio compartilhados ficam em [`types/`](types/) na raiz.
 
 ### Principais decisões e bibliotecas
 
-- **React Compiler** - o projeto compila com o [`babel-plugin-react-compiler`](https://react.dev/learn/react-compiler). Por isso **não há `useMemo`/`useCallback`/`React.memo` explícitos** no código: a memoização é feita automaticamente pelo compiler. As regras do compiler também são verificadas no lint (`eslint-plugin-react-hooks`), então evite quebrar as *Rules of React*.
+- **React Compiler** - o projeto compila com o [`babel-plugin-react-compiler`](https://react.dev/learn/react-compiler). Por isso **não há `useMemo`/`useCallback`/`React.memo` explícitos** no código: a memoização é feita automaticamente pelo compiler.
 - **[React Native Paper](https://callstack.github.io/react-native-paper/)** - biblioteca de UI (Material Design 3).
 - **[Zustand](https://zustand-demo.pmnd.rs/)** - estado global.
 - **[TanStack Query](https://tanstack.com/query)** - estado de servidor (fetch/cache/mutations).
